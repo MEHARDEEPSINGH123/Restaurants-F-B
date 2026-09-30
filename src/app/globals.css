@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme {
+  --color-savora-bg: #F7F3EB;
+  --color-savora-primary: #1B1B1B;
+  --color-savora-accent: #A63A2B;
+  --color-savora-gold: #C8A96A;
+  --color-savora-secondary: #5A4A42;
+  --color-savora-card: #FFFDF8;
+  --color-savora-border: #E7DFD4;
+
+  --font-editorial: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-modern: var(--font-cinzel), var(--font-cormorant), "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+}
+
+:root {
+  --bg-primary: #F7F3EB;
+  --text-primary: #1B1B1B;
+  --text-secondary: #5A4A42;
+  --accent: #A63A2B;
+  --gold: #C8A96A;
+  --card: #FFFDF8;
+  --border: #E7DFD4;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #F7F3EB;
+  color: #1B1B1B;
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #F7F3EB;
+  color: #1B1B1B;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F3EB;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8A96A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A63A2B;
+}
+
+/* Luxury selection highlight */
+::selection {
+  background: #C8A96A;
+  color: #1B1B1B;
+}
+
+/* Glassmorphism & luxury borders */
+.luxury-glass {
+  background: rgba(255, 253, 248, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 169, 106, 0.25);
+}
+
+.luxury-glass-dark {
+  background: rgba(27, 27, 27, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 169, 106, 0.3);
+}
+
+/* Editorial typography utilities */
+.font-editorial {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+}
+
+.font-modern {
+  font-family: var(--font-cinzel), var(--font-cormorant), "Cinzel", "Cormorant Garamond", Georgia, serif;
+}
+
+.font-body {
+  font-family: var(--font-inter), "Inter", sans-serif;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #C8A96A 0%, #E8D3A7 50%, #9B7B3E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-editorial-serif {
+  font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  letter-spacing: -0.02em;
+}

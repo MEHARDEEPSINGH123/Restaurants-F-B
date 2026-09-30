@@ -1,0 +1,142 @@
+
+SAVORA SINGAPORE - F&B WEBSITE GUIDE
+
+BRAND
+Savora Singapore
+
+TAGLINE
+Every Dish Tells A Story
+
+PROJECT TYPE
+Premium Singapore Restaurant & Dining Experience
+
+TECH STACK
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- GSAP
+- Lenis Smooth Scroll
+
+DESIGN GOAL
+
+Create a luxury editorial dining experience.
+
+DO NOT BUILD:
+- Generic restaurant template
+- Food delivery app UI
+- Dashboard layout
+- Statistics counters
+- Hero + cards + footer template
+- Repetitive navigation used in previous projects
+
+UI DIRECTION
+
+Inspired by:
+- Michelin Guide
+- Luxury hospitality websites
+- Editorial magazines
+- Modern Dribbble restaurant concepts
+
+NAVIGATION
+
+Use a minimal floating navigation.
+
+Transparent initially.
+Appears on scroll.
+Elegant micro-interactions.
+
+COLOR PALETTE
+
+Background: #F7F3EB
+Primary: #1B1B1B
+Accent: #A63A2B
+Gold: #C8A96A
+Secondary: #5A4A42
+Card: #FFFDF8
+Border: #E7DFD4
+
+TYPOGRAPHY
+
+Headings:
+Cormorant Garamond
+
+Secondary:
+Space Grotesk
+
+Body:
+Inter
+
+WEBSITE STRUCTURE
+
+1. Cinematic Landing Experience
+2. Signature Dining Collection
+3. Chef Showcase
+4. Interactive Menu Experience
+5. Ingredient Origins
+6. Restaurant Locations
+7. Reservation Studio
+8. Private Dining Experiences
+9. Catering Services
+10. Seasonal Menus
+11. Events & Experiences
+12. Customer Reviews
+13. Contact
+
+DATA SOURCE
+
+Use uploaded JSON dataset dynamically.
+
+Required sections:
+
+- Restaurants
+- Menu Categories
+- Menu Items
+- Signature Dishes
+- Chefs
+- Ingredients
+- Reviews
+- Reservations
+- Catering Packages
+- Private Dining Packages
+- Promotions
+- Seasonal Menus
+- Events
+- Delivery Zones
+
+ANIMATIONS
+
+Required:
+
+- GSAP
+- Framer Motion
+- Lenis
+
+Effects:
+
+- Scroll storytelling
+- Image reveal
+- Parallax
+- Sticky sections
+- Text reveal
+- Luxury transitions
+- Hover interactions
+
+IMAGES
+
+Use:
+- Fine dining
+- Singapore restaurants
+- Chef experiences
+- Premium food photography
+- Luxury interiors
+
+Avoid:
+- Fast food imagery
+- Generic stock photos
+- Delivery app screenshots
+
+FINAL OBJECTIVE
+
+The website should feel like a luxury hospitality brand and Michelin-level dining experience rather than a standard restaurant website.
