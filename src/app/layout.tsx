@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Cinzel, Inter } from 'next/font/google';
 import './globals.css';
 import SmoothScrollProvider from '@/components/SmoothScrollProvider';
+import Chatbot from '@/components/Chatbot';
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>
+        <Chatbot />
       </body>
     </html>
   );
