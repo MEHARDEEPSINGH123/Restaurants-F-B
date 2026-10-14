@@ -100,24 +100,31 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
         }`}
       >
         <div className="w-full px-6 md:px-10 lg:px-12 relative flex items-center justify-between min-h-[48px]">
-          {/* Left Wing: Navigation Links (Desktop) & Mobile Menu Toggle */}
-          <div className="flex items-center gap-4 xl:gap-6 shrink-0 z-10">
-            {/* Mobile / Tablet Menu Drawer Button */}
+          {/* Left Wing: Editorial Index Drawer Trigger & Optional Wide-Screen Quick Nav */}
+          <div className="flex items-center gap-3 sm:gap-4 xl:gap-5 shrink-0 z-10">
+            {/* Unified Editorial Index Drawer Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-full border transition-all shrink-0 ${
+              className={`group flex items-center gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full border transition-all shrink-0 ${
                 scrolled
-                  ? 'border-[#E7DFD4] bg-[#FFFDF8]/80 text-[#1B1B1B] hover:text-[#A63A2B]'
-                  : 'border-white/20 bg-black/40 text-[#FFFDF8] hover:text-[#C8A96A]'
+                  ? 'border-[#E7DFD4] bg-[#FFFDF8]/80 text-[#1B1B1B] hover:border-[#A63A2B] hover:text-[#A63A2B]'
+                  : 'border-white/20 bg-black/40 text-[#FFFDF8] hover:border-[#C8A96A] hover:text-[#C8A96A]'
               }`}
-              aria-label="Toggle Menu"
+              aria-label="Toggle Navigation Index"
             >
-              {mobileMenuOpen ? <X className="w-4 h-4 md:w-5 md:h-5" /> : <Menu className="w-4 h-4 md:w-5 md:h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C8A96A] transition-transform group-hover:rotate-90" />
+              ) : (
+                <Menu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C8A96A] transition-transform group-hover:scale-110" />
+              )}
+              <span className="text-[10px] sm:text-[11px] font-modern uppercase tracking-[0.18em] font-medium">
+                Index
+              </span>
             </button>
 
-            {/* Desktop Editorial Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-6 shrink-0">
-              {navLinks.slice(0, 5).map((link) => (
+            {/* Curated quick section links: only on 2xl displays (>=1536px) to guarantee zero collision with brand */}
+            <nav className="hidden 2xl:flex items-center gap-5 shrink-0">
+              {navLinks.slice(0, 3).map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
@@ -143,19 +150,6 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
                   )}
                 </button>
               ))}
-
-              {/* Full Index Trigger */}
-              <button
-                onClick={() => setMobileMenuOpen(true)}
-                className={`text-[11px] font-modern uppercase tracking-[0.16em] transition-colors duration-300 py-1 whitespace-nowrap shrink-0 flex items-center gap-1.5 ${
-                  scrolled
-                    ? 'text-[#5A4A42] hover:text-[#A63A2B]'
-                    : 'text-[#FFFDF8]/70 hover:text-[#C8A96A]'
-                }`}
-              >
-                <span>Index</span>
-                <span className="text-[9px] opacity-60">＋</span>
-              </button>
             </nav>
           </div>
 
@@ -165,7 +159,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             className="group flex flex-col items-center text-center focus:outline-none absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 pointer-events-auto"
           >
             <span
-              className={`font-editorial text-xl sm:text-2xl md:text-3xl font-light tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap ${
+              className={`font-editorial text-base sm:text-xl md:text-2xl lg:text-[23px] font-light tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap ${
                 scrolled
                   ? 'text-[#1B1B1B] group-hover:text-[#A63A2B]'
                   : 'text-[#FFFDF8] group-hover:text-[#E8D3A7]'
@@ -174,7 +168,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
               Dagsis Resturents Dummy
             </span>
             <span
-              className={`font-modern text-[8px] md:text-[9px] uppercase tracking-[0.24em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
+              className={`font-modern text-[7.5px] sm:text-[8px] md:text-[9px] uppercase tracking-[0.24em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
                 scrolled ? 'text-[#5A4A42]' : 'text-[#E7DFD4]/90'
               }`}
             >
@@ -192,7 +186,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
                   scrollToSection('reservations');
                 }
               }}
-              className={`group relative px-4 md:px-5 py-2 md:py-2.5 overflow-hidden rounded-full border transition-all duration-300 text-[10px] md:text-[11px] font-modern tracking-[0.18em] uppercase flex items-center gap-2 shrink-0 whitespace-nowrap shadow-[0_4px_25px_rgba(0,0,0,0.25)] ${
+              className={`group relative px-3.5 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5 overflow-hidden rounded-full border transition-all duration-300 text-[10px] md:text-[11px] font-modern tracking-[0.18em] uppercase flex items-center gap-2 shrink-0 whitespace-nowrap shadow-[0_4px_25px_rgba(0,0,0,0.25)] ${
                 scrolled
                   ? 'border-[#C8A96A] bg-[#1B1B1B] text-[#FFFDF8] hover:bg-[#A63A2B] hover:border-[#A63A2B]'
                   : 'border-[#C8A96A] bg-[#FFFDF8] text-[#1B1B1B] hover:bg-[#A63A2B] hover:text-[#FFFDF8] hover:border-[#A63A2B]'
