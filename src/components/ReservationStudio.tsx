@@ -64,7 +64,7 @@ export default function ReservationStudio({ initialEstateId }: ReservationStudio
 
     setConfirmedReservation({
       id: assignedId,
-      code: `SAVORA-${assignedId}-${Math.floor(1000 + Math.random() * 9000)}`,
+      code: `DAGSIS-${assignedId}-${Math.floor(1000 + Math.random() * 9000)}`,
       estateName: selectedRestaurant.name,
       district: selectedRestaurant.district,
       date: selectedDate,
@@ -335,7 +335,7 @@ export default function ReservationStudio({ initialEstateId }: ReservationStudio
                   <input
                     type="tel"
                     required
-                    placeholder="+65 9123 4567"
+                    placeholder="+65 XXXXXXXXX"
                     value={guestPhone}
                     onChange={(e) => setGuestPhone(e.target.value)}
                     className="w-full px-4 py-2 bg-[#F7F3EB] border border-[#E7DFD4] rounded-sm text-xs font-modern text-[#1B1B1B] focus:outline-none focus:border-[#C8A96A]"

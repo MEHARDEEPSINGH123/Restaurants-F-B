@@ -24,8 +24,8 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="font-editorial text-4xl sm:text-5xl md:text-6xl tracking-[0.2em] font-light uppercase text-[#FFFDF8]">
-                Savora
+              <span className="font-editorial text-3xl sm:text-4xl md:text-5xl tracking-[0.16em] font-light uppercase text-[#FFFDF8]">
+                Dagsis Resturents Dummy
               </span>
               <span className="w-2 h-2 rounded-full bg-[#C8A96A]" />
             </div>
@@ -51,7 +51,7 @@ export default function Footer() {
         {/* Col 1: Brand & Philosophy */}
         <div className="lg:col-span-4 space-y-4">
           <span className="text-[10px] font-modern uppercase tracking-[0.3em] text-[#C8A96A] block">
-            The Savora Manifesto
+            The Dagsis Resturents Dummy Manifesto
           </span>
           <p className="font-sans text-xs md:text-sm text-[#E7DFD4]/75 leading-relaxed font-light">
             Founded in Singapore as an architectural sanctuary for haute gastronomy. We unite 15 Singapore
@@ -91,15 +91,15 @@ export default function Footer() {
           <div className="space-y-2 text-xs font-modern text-[#E7DFD4]/80">
             <p className="flex items-center gap-2">
               <PhoneCall className="w-3.5 h-3.5 text-[#A63A2B]" />
-              <span>+65 6789 1234 (10:00 — 23:00)</span>
+              <span>+65 XXXXXXXXX (10:00 — 23:00)</span>
             </p>
             <p className="flex items-center gap-2">
               <Mail className="w-3.5 h-3.5 text-[#C8A96A]" />
-              <span>concierge@savorasingapore.com</span>
+              <span>concierge@dagsisrestaurants.com</span>
             </p>
             <p className="flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5 text-[#A63A2B]" />
-              <span>Marina Bay & 14 Sister Estates, Singapore</span>
+              <span>123, Street ABC, State XYZ, Pin-000000</span>
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function Footer() {
       {/* Bottom Colophon Bar */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-8 border-t border-[#5A4A42]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-modern uppercase tracking-widest text-[#E7DFD4]/50">
         <div>
-          &copy; 2026 Savora Singapore Pte. Ltd. All Rights Reserved.
+          &copy; 2026 Dagsis Resturents Dummy Pte. Ltd. All Rights Reserved.
         </div>
         <div className="flex items-center gap-6">
           <span>Terms of Degustation</span>

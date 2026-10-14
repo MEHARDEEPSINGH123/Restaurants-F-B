@@ -60,7 +60,7 @@ export default function RestaurantCollection({
           <div className="mt-6 md:mt-0 max-w-md">
             <p className="font-sans text-sm md:text-base text-[#5A4A42] leading-relaxed font-light">
               From the cantilevered glass pavilion over Marina Bay to historic Peranakan shophouse
-              vaults in Katong, each Savora estate is an architectural ode to its Singapore district.
+              vaults in Katong, each Dagsis Resturents Dummy estate is an architectural ode to its Singapore district.
             </p>
           </div>
         </div>

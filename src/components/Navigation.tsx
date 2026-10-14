@@ -165,20 +165,20 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             className="group flex flex-col items-center text-center focus:outline-none absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 pointer-events-auto"
           >
             <span
-              className={`font-editorial text-2xl md:text-3xl font-light tracking-[0.24em] uppercase transition-colors duration-300 whitespace-nowrap ${
+              className={`font-editorial text-xl sm:text-2xl md:text-3xl font-light tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap ${
                 scrolled
                   ? 'text-[#1B1B1B] group-hover:text-[#A63A2B]'
                   : 'text-[#FFFDF8] group-hover:text-[#E8D3A7]'
               }`}
             >
-              Savora
+              Dagsis Resturents Dummy
             </span>
             <span
               className={`font-modern text-[8px] md:text-[9px] uppercase tracking-[0.24em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
                 scrolled ? 'text-[#5A4A42]' : 'text-[#E7DFD4]/90'
               }`}
             >
-              Singapore · Haute Table
+              Haute Gastronomie · Singapore
             </span>
           </button>
 
@@ -223,7 +223,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
                   Editorial Index
                 </span>
                 <span className="font-modern text-xs tracking-widest text-[#5A4A42]">
-                  15 Singapore Estates · 3 Michelin Stars
+                  15 Estates · 3 Michelin Stars
                 </span>
               </div>
 
@@ -249,16 +249,16 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             {/* Bottom Estate Info */}
             <div className="max-w-4xl mx-auto w-full pt-8 border-t border-[#E7DFD4] mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs font-modern text-[#5A4A42]">
               <div>
-                <p className="font-medium text-[#1B1B1B]">Savora Singapore Concierge</p>
-                <p>Marina Bay Sands · Orchard · Sentosa · Bugis · 15 Estates</p>
+                <p className="font-medium text-[#1B1B1B]">Dagsis Resturents Dummy Concierge</p>
+                <p>123, Street ABC, State XYZ, Pin-000000</p>
               </div>
               <div className="flex items-center gap-6">
                 <a
-                  href="tel:+6567891234"
+                  href="tel:+65XXXXXXXXX"
                   className="flex items-center gap-1.5 text-[#A63A2B] hover:underline"
                 >
                   <PhoneCall className="w-3.5 h-3.5" />
-                  +65 6789 1234
+                  +65 XXXXXXXXX
                 </a>
                 <span className="text-[#C8A96A]">Private Bookings Daily 10:00 – 22:00</span>
               </div>

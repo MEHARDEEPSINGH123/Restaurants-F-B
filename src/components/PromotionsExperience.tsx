@@ -32,7 +32,7 @@ export default function PromotionsExperience() {
     return {
       ...p,
       privilege: privileges[idx % privileges.length],
-      code: `SAVORA-${p.id}`,
+      code: `DAGSIS-${p.id}`,
       validity: 'Valid through 2026 Season',
       applicableEstates: 'All 15 Singapore Estates',
     };

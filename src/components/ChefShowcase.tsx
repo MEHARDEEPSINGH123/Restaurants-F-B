@@ -77,7 +77,7 @@ export default function ChefShowcase() {
           </div>
           <div className="mt-6 md:mt-0 max-w-md">
             <p className="font-sans text-sm md:text-base text-[#E7DFD4]/70 leading-relaxed font-light">
-              Craft without compromise. Savora&apos;s kitchen brigade unites 50 master artisans whose
+              Craft without compromise. Dagsis Resturents Dummy&apos;s kitchen brigade unites 50 master artisans whose
               pedigrees span classical French ateliers, Tokyo kaiseki temples, and Singaporean heritage stoves.
             </p>
             <button
@@ -259,7 +259,7 @@ export default function ChefShowcase() {
                 <div className="flex items-center justify-between border-b border-[#5A4A42]/50 pb-6 mb-8">
                   <div>
                     <span className="text-[10px] font-modern uppercase tracking-[0.3em] text-[#C8A96A]">
-                      Savora Culinary Brigade
+                      Dagsis Resturents Dummy Culinary Brigade
                     </span>
                     <h3 className="font-editorial text-3xl md:text-4xl text-[#FFFDF8]">
                       All 50 Master Chefs
