@@ -99,36 +99,29 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             : 'py-5 md:py-6 bg-gradient-to-b from-[#1B1B1B]/85 via-[#1B1B1B]/40 to-transparent'
         }`}
       >
-        <div className="w-full px-6 md:px-10 lg:px-12 relative flex items-center justify-between min-h-[48px]">
-          {/* Left Wing: Editorial Index Drawer Trigger & Optional Wide-Screen Quick Nav */}
-          <div className="flex items-center gap-3 sm:gap-4 xl:gap-5 shrink-0 z-10">
-            {/* Unified Editorial Index Drawer Button */}
+        <div className="w-full px-4 sm:px-6 lg:px-6 xl:px-10 relative flex items-center justify-between min-h-[48px]">
+          {/* Left Wing: Navigation Links (Desktop) & Mobile Menu Toggle */}
+          <div className="flex items-center gap-3 xl:gap-5 shrink-0 z-10">
+            {/* Mobile / Tablet Menu Drawer Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`group flex items-center gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full border transition-all shrink-0 ${
+              className={`lg:hidden p-2 rounded-full border transition-all shrink-0 ${
                 scrolled
-                  ? 'border-[#E7DFD4] bg-[#FFFDF8]/80 text-[#1B1B1B] hover:border-[#A63A2B] hover:text-[#A63A2B]'
-                  : 'border-white/20 bg-black/40 text-[#FFFDF8] hover:border-[#C8A96A] hover:text-[#C8A96A]'
+                  ? 'border-[#E7DFD4] bg-[#FFFDF8]/80 text-[#1B1B1B] hover:text-[#A63A2B]'
+                  : 'border-white/20 bg-black/40 text-[#FFFDF8] hover:text-[#C8A96A]'
               }`}
-              aria-label="Toggle Navigation Index"
+              aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? (
-                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C8A96A] transition-transform group-hover:rotate-90" />
-              ) : (
-                <Menu className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#C8A96A] transition-transform group-hover:scale-110" />
-              )}
-              <span className="text-[10px] sm:text-[11px] font-modern uppercase tracking-[0.18em] font-medium">
-                Index
-              </span>
+              {mobileMenuOpen ? <X className="w-4 h-4 md:w-5 md:h-5" /> : <Menu className="w-4 h-4 md:w-5 md:h-5" />}
             </button>
 
-            {/* Curated quick section links: only on 2xl displays (>=1536px) to guarantee zero collision with brand */}
-            <nav className="hidden 2xl:flex items-center gap-5 shrink-0">
-              {navLinks.slice(0, 3).map((link) => (
+            {/* Desktop Editorial Navigation Links: Exactly as in Picture 1, fitted cleanly at 100% zoom */}
+            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 shrink-0">
+              {navLinks.slice(0, 5).map((link) => (
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className={`group relative text-[11px] font-modern uppercase tracking-[0.16em] transition-colors duration-300 py-1 whitespace-nowrap shrink-0 flex items-center ${
+                  className={`group relative text-[9.5px] xl:text-[10.5px] 2xl:text-[11px] font-modern uppercase tracking-[0.11em] xl:tracking-[0.14em] 2xl:tracking-[0.16em] transition-colors duration-300 py-1 whitespace-nowrap shrink-0 flex items-center ${
                     activeSection === link.id
                       ? scrolled
                         ? 'text-[#A63A2B] font-semibold'
@@ -150,6 +143,19 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
                   )}
                 </button>
               ))}
+
+              {/* Full Index Trigger with ＋ */}
+              <button
+                onClick={() => setMobileMenuOpen(true)}
+                className={`text-[9.5px] xl:text-[10.5px] 2xl:text-[11px] font-modern uppercase tracking-[0.11em] xl:tracking-[0.14em] 2xl:tracking-[0.16em] transition-colors duration-300 py-1 whitespace-nowrap shrink-0 flex items-center gap-1 ${
+                  scrolled
+                    ? 'text-[#5A4A42] hover:text-[#A63A2B]'
+                    : 'text-[#FFFDF8]/70 hover:text-[#C8A96A]'
+                }`}
+              >
+                <span>Index</span>
+                <span className="text-[9px] opacity-60">＋</span>
+              </button>
             </nav>
           </div>
 
@@ -159,7 +165,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             className="group flex flex-col items-center text-center focus:outline-none absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-20 pointer-events-auto"
           >
             <span
-              className={`font-editorial text-base sm:text-xl md:text-2xl lg:text-[23px] font-light tracking-[0.12em] sm:tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap ${
+              className={`font-editorial text-base sm:text-xl lg:text-[20px] xl:text-[23px] 2xl:text-[26px] font-light tracking-[0.12em] sm:tracking-[0.14em] xl:tracking-[0.16em] uppercase transition-colors duration-300 whitespace-nowrap ${
                 scrolled
                   ? 'text-[#1B1B1B] group-hover:text-[#A63A2B]'
                   : 'text-[#FFFDF8] group-hover:text-[#E8D3A7]'
@@ -168,7 +174,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
               Dagsis Resturents Dummy
             </span>
             <span
-              className={`font-modern text-[7.5px] sm:text-[8px] md:text-[9px] uppercase tracking-[0.24em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
+              className={`font-modern text-[7.5px] sm:text-[8px] md:text-[8.5px] uppercase tracking-[0.22em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
                 scrolled ? 'text-[#5A4A42]' : 'text-[#E7DFD4]/90'
               }`}
             >
