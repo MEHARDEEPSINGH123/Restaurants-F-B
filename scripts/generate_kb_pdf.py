@@ -1,4 +1,4 @@
-# Dagsis Resturents Dummy - AI Chatbot Master Knowledge Base PDF Generator
+# Dagsis Restaurants Dummy - AI Chatbot Master Knowledge Base PDF Generator
 # Compiles complete grounding reference for LLMs, RAG vectors, and concierge staff.
 
 import json
@@ -51,7 +51,7 @@ class SavoraNumberedCanvas(canvas.Canvas):
         # Top Running Header
         self.setFont("Helvetica-Bold", 7.5)
         self.setFillColor(colors.HexColor("#C8A96A"))  # Gold
-        self.drawString(36, page_height - 30, "DAGSIS RESTURENTS DUMMY")
+        self.drawString(36, page_height - 30, "DAGSIS RESTAURANTS DUMMY")
 
         self.setFont("Helvetica", 7.5)
         self.setFillColor(colors.HexColor("#5A4A42"))
@@ -239,7 +239,7 @@ def build_pdf():
     story.append(Spacer(1, 20))
     # Brand Top Pill Badge
     pill_data = [[
-        Paragraph("<font color='#C8A96A'><b>DAGSIS RESTURENTS DUMMY</b></font>  ·  HAUTE GASTRONOMIE  ·  EST. SINGAPORE", style_table_cell_bold),
+        Paragraph("<font color='#C8A96A'><b>DAGSIS RESTAURANTS DUMMY</b></font>  ·  HAUTE GASTRONOMIE  ·  EST. SINGAPORE", style_table_cell_bold),
         Paragraph("<font color='#5A4A42'><b>DOC REF: KB-AI-2026-V1</b></font>", style_table_cell_secondary)
     ]]
     t_pill = Table(pill_data, colWidths=[360, 163])
@@ -255,7 +255,7 @@ def build_pdf():
     story.append(t_pill)
     story.append(Spacer(1, 35))
 
-    story.append(Paragraph("DAGSIS RESTURENTS DUMMY", style_cover_title))
+    story.append(Paragraph("DAGSIS RESTAURANTS DUMMY", style_cover_title))
     story.append(Spacer(1, 4))
     story.append(Paragraph("OMNISCIENT CONCIERGE & AI CHATBOT KNOWLEDGE BASE", style_cover_subtitle))
     story.append(Spacer(1, 8))
@@ -265,10 +265,10 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_accent, spaceBefore=4, spaceAfter=16))
 
     cover_desc = (
-        "This master document serves as the single source of truth for the Dagsis Resturents Dummy "
+        "This master document serves as the single source of truth for the Dagsis Restaurants Dummy "
         "Intelligent Concierge Bot, Retrieval-Augmented Generation (RAG) knowledge vectors, "
         "fine-tuning pipelines, and operational VIP guest relations staff. It encapsulates the "
-        "entirety of Dagsis Resturents Dummy's 15 restaurant estates, 20 menu categories, 300 curated dishes, "
+        "entirety of Dagsis Restaurants Dummy's 15 restaurant estates, 20 menu categories, 300 curated dishes, "
         "100 signature creations, 50 master chefs, 200 terroir botanical ingredients, 30 private dining "
         "packages, 50 luxury catering offerings, 30 seasonal degustations, 50 events, 40 privileges, "
         "50 Singapore delivery postal zones, booking policies, guest sentiment, and comprehensive "
@@ -394,21 +394,21 @@ def build_pdf():
 
     story.append(Paragraph("1.1 Executive Brand Essence & Gastronomic Philosophy", style_section_h2))
     p1 = (
-        "<b>Dagsis Resturents Dummy</b> is the apex dining collective and hospitality group in Southeast Asia, "
+        "<b>Dagsis Restaurants Dummy</b> is the apex dining collective and hospitality group in Southeast Asia, "
         "operating 15 distinguished estates across the island republic. Under the eternal motto "
-        "<i>'Every Dish Tells A Story'</i>, Dagsis Resturents Dummy articulates Singapore's rich spice-route heritage, "
+        "<i>'Every Dish Tells A Story'</i>, Dagsis Restaurants Dummy articulates Singapore's rich spice-route heritage, "
         "maritime trading history, indigenous botanicals, and classical culinary disciplines into singular, "
-        "transformative tasting journeys. Across its portfolio, Dagsis Resturents Dummy commands multiple Michelin Stars and "
+        "transformative tasting journeys. Across its portfolio, Dagsis Restaurants Dummy commands multiple Michelin Stars and "
         "the coveted Michelin Green Star for sustainable gastronomy."
     )
     story.append(Paragraph(p1, style_body))
 
-    story.append(Paragraph("1.2 The Dagsis Resturents Dummy AI Concierge Persona Specification", style_section_h2))
+    story.append(Paragraph("1.2 The Dagsis Restaurants Dummy AI Concierge Persona Specification", style_section_h2))
     p_persona = (
-        "When acting as the Dagsis Resturents Dummy AI Concierge, conversational agents must adhere strictly to the following parameters:<br/>"
+        "When acting as the Dagsis Restaurants Dummy AI Concierge, conversational agents must adhere strictly to the following parameters:<br/>"
         "• <b>Voice & Tone:</b> Cultured, gracious, discreet, encyclopedic, warm, and Michelin-grade professional. "
         "Avoid casual slang, robotic stock phrases, or hurried dismissiveness.<br/>"
-        "• <b>Standard Greeting:</b> <i>'Welcome to Dagsis Resturents Dummy. It is my distinct honor to assist you with our 15 culinary estates, private dining salons, or custom degustation flights. How may I orchestrate your experience today?'</i><br/>"
+        "• <b>Standard Greeting:</b> <i>'Welcome to Dagsis Restaurants Dummy. It is my distinct honor to assist you with our 15 culinary estates, private dining salons, or custom degustation flights. How may I orchestrate your experience today?'</i><br/>"
         "• <b>Pricing Transparency:</b> All rates are quoted in Singapore Dollars (SGD) and subject to a 10% Service Charge and prevailing 9% Goods and Services Tax (GST), unless stated as nett.<br/>"
         "• <b>Direct Touchpoints:</b> Always supply the concierge contact telephone (+65 XXXXXXXXX), address (123, Street ABC, State XYZ, Pin-000000), and email (concierge@dagsisrestaurants.com) when guests require human escalation, bespoke event design, or custom dietary authorizations."
     )
@@ -446,7 +446,7 @@ def build_pdf():
         [
             Paragraph("<b>BYOB & Corkage Fee</b>", style_table_cell_bold),
             Paragraph("SGD $120 per 750ml wine bottle (limit 2 bottles per table). 1-for-1 corkage waiver applies for each bottle purchased from our Grand Cru Cellar. Strictly no outside spirits.", style_table_cell),
-            Paragraph("Highlight Dagsis Resturents Dummy's 4,000-bottle subterranean reserves as an alternative to bringing wine.", style_table_cell_secondary),
+            Paragraph("Highlight Dagsis Restaurants Dummy's 4,000-bottle subterranean reserves as an alternative to bringing wine.", style_table_cell_secondary),
         ],
         [
             Paragraph("<b>Celebration Cakes</b>", style_table_cell_bold),
@@ -475,7 +475,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy operates 15 distinct culinary estates distributed strategically across Singapore's most "
+        "Dagsis Restaurants Dummy operates 15 distinct culinary estates distributed strategically across Singapore's most "
         "prestigious waterfronts, heritage quarters, and scenic enclaves. Each restaurant possesses an "
         "independent culinary architecture, designated master sommelier, and distinctive dining atmosphere.",
         style_body
@@ -543,7 +543,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy's menu consists of exactly 300 dynamically cataloged dishes distributed across 20 gastronomic movements. "
+        "Dagsis Restaurants Dummy's menu consists of exactly 300 dynamically cataloged dishes distributed across 20 gastronomic movements. "
         "Every single dish has been calibrated with precise SGD pricing, nutritional caloric metrics, dietary flags, "
         "and sommelier wine pairing recommendations. The AI Chatbot must reference these exact prices when quoting dishes.",
         style_body
@@ -626,7 +626,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy's 100 Signature Dishes embody the pinnacle of our chefs' artistic expressions. "
+        "Dagsis Restaurants Dummy's 100 Signature Dishes embody the pinnacle of our chefs' artistic expressions. "
         "Unlike standard à la carte items, these creations feature ultra-rare ingredients, "
         "multigenerational fermentation processes, and tableside master culinary theatrical performances.",
         style_body
@@ -722,7 +722,7 @@ def build_pdf():
             'id': 'CHF004', 'name': 'Chef Marco Rossi', 'title': 'European Haute Cuisine & Master Sommelier Director', 'stars': '2 Michelin Stars',
             'estate': 'Novena Tuscan Conservatory (RST008)', 'exp': '22 Years', 'specialty': 'Modern Mediterranean & Grand Cru Pairing Architecture',
             'dish': 'Aged Carnaroli Risotto with Langoustine & White Alba Truffle',
-            'bio': 'Former head sommelier and chef de cuisine across Piedmont and Tuscany, Marco curates Dagsis Resturents Dummy’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.'
+            'bio': 'Former head sommelier and chef de cuisine across Piedmont and Tuscany, Marco curates Dagsis Restaurants Dummy’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.'
         },
     ]
 
@@ -804,7 +804,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy maintains a proprietary agricultural and marine supply chain comprising 200 distinct terroir ingredients. "
+        "Dagsis Restaurants Dummy maintains a proprietary agricultural and marine supply chain comprising 200 distinct terroir ingredients. "
         "Every single item is traceable to certified biodynamic farms, artisanal deep-sea divers, or high-altitude orchards.",
         style_body
     ))
@@ -827,7 +827,7 @@ def build_pdf():
     ]
 
     stories = [
-        'Cultivated specifically for Dagsis Resturents Dummy under controlled micro-climate parameters to ensure maximum essential oil potency.',
+        'Cultivated specifically for Dagsis Restaurants Dummy under controlled micro-climate parameters to ensure maximum essential oil potency.',
         'Harvested at sunrise by artisanal diving families practicing sustainable cyclical rotation for over four generations.',
         'Flown in via climate-controlled courier within 18 hours of harvest directly from the source to our kitchen.',
         'Grown on volcanic nutrient-rich soil without synthetic fertilizers, irrigated purely with natural spring water.',
@@ -879,7 +879,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "For dignitaries, celebratory milestones, and private business conclaves, Dagsis Resturents Dummy offers 30 private dining salons. "
+        "For dignitaries, celebratory milestones, and private business conclaves, Dagsis Restaurants Dummy offers 30 private dining salons. "
         "Each booking commands total acoustic discretion, customized menu calligraphy, dedicated sommelier cellar access, "
         "and a personal kitchen brigade.",
         style_body
@@ -946,7 +946,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy Catering mobilizes Michelin-standard kitchens to external venues, diplomatic embassies, "
+        "Dagsis Restaurants Dummy Catering mobilizes Michelin-standard kitchens to external venues, diplomatic embassies, "
         "superyachts berthed at Sentosa Cove, and luxury private residences across 4 Core Pillars:",
         style_body
     ))
@@ -1017,7 +1017,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy structures its calendar around 4 Grand Seasonal Movements that honor equatorial micro-seasons "
+        "Dagsis Restaurants Dummy structures its calendar around 4 Grand Seasonal Movements that honor equatorial micro-seasons "
         "and international harvest equinoxes:",
         style_body
     ))
@@ -1080,7 +1080,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy hosts an ongoing roster of 50 exclusive culinary and oenological events categorized into "
+        "Dagsis Restaurants Dummy hosts an ongoing roster of 50 exclusive culinary and oenological events categorized into "
         "Chef's Tables, Wine Pairing Nights, Seasonal Launches, and Private Soirées:",
         style_body
     ))
@@ -1142,7 +1142,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy maintains 40 curated privileges and promotions in partnership with prestige credit cards "
+        "Dagsis Restaurants Dummy maintains 40 curated privileges and promotions in partnership with prestige credit cards "
         "(American Express Centurion, DBS Altitude, UOB Reserve, OCBC Voyage) and luxury concierge desks.",
         style_body
     ))
@@ -1208,7 +1208,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy delivers haute cuisine to residences and private yachts across all 50 designated Singapore delivery zones. "
+        "Dagsis Restaurants Dummy delivers haute cuisine to residences and private yachts across all 50 designated Singapore delivery zones. "
         "Orders are dispatched in custom climate-controlled dual-zone thermal vaults (68°C heated chamber / -2°C chilled chamber) "
         "driven by white-glove chauffeurs to preserve Michelin-grade texture and temperature integrity.<br/>"
         "• <b>Minimum Order:</b> SGD $120 per delivery destination.<br/>"
@@ -1293,7 +1293,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy operates a real-time reservation ledger managing 150 daily seating allocations. "
+        "Dagsis Restaurants Dummy operates a real-time reservation ledger managing 150 daily seating allocations. "
         "The AI Chatbot assists guests in selecting dates, seating experiences, dietary disclosures, "
         "and generates instant VIP confirmation passes with unique booking verification codes.<br/>"
         "• <b>Advance Booking Window:</b> Up to 90 days in advance via the web portal or telephone concierge.<br/>"
@@ -1390,13 +1390,13 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Resturents Dummy has been universally evaluated across 300 verified 5-star reviews and international gastronomy journals. "
+        "Dagsis Restaurants Dummy has been universally evaluated across 300 verified 5-star reviews and international gastronomy journals. "
         "The AI Chatbot should reference these quotes when guests inquire about reviews, ratings, or reputation.",
         style_body
     ))
 
     critics_quotes = [
-        ("The Michelin Guide Singapore 2026", "Chief Inspector Evaluation", "A triumph of Southeast Asian botanical poetry and French technical restraint. Dagsis Resturents Dummy has rewritten the boundaries of fine dining in Singapore."),
+        ("The Michelin Guide Singapore 2026", "Chief Inspector Evaluation", "A triumph of Southeast Asian botanical poetry and French technical restraint. Dagsis Restaurants Dummy has rewritten the boundaries of fine dining in Singapore."),
         ("Tatler Dining Singapore", "Gastronomy Editor", "From the first sip of the torch ginger consommé to the final notes of the smoked cocoa soufflé, every single element was executed with flawless poise."),
         ("Financial Times - How To Spend It", "Nicholas Lander", "The most breathtaking dining view in Asia paired with an omakase counter that rivals the very finest temples of Ginza."),
         ("Epicure Asia", "Senior Food Critic", "An unforgettable masterclass in hospitality. The sommelier pairing journey alone deserves an international pilgrimage."),
@@ -1454,32 +1454,32 @@ def build_pdf():
     story.append(Paragraph("15.2 The 30 Master FAQs for Instant Chatbot Retrieval", style_section_h2))
 
     faqs = [
-        ("Q1: What is Dagsis Resturents Dummy?", "Dagsis Resturents Dummy is a luxury restaurant collective operating 15 culinary estates across Singapore, blending French classical technique with Southeast Asian botanicals. It holds 3 Michelin Stars at its flagship ateliers."),
+        ("Q1: What is Dagsis Restaurants Dummy?", "Dagsis Restaurants Dummy is a luxury restaurant collective operating 15 culinary estates across Singapore, blending French classical technique with Southeast Asian botanicals. It holds 3 Michelin Stars at its flagship ateliers."),
         ("Q2: Where is the flagship restaurant located?", "The flagship atelier (RST001) is located at 123, Street ABC, State XYZ, Pin-000000 (Marina Bay), offering 270° panoramic views of the Singapore Straits, monolithic brushed travertine architecture, and 3-Michelin-Star dining."),
-        ("Q3: How many restaurants does Dagsis Resturents Dummy have in Singapore?", "Dagsis Resturents Dummy operates exactly 15 estates spanning Marina Bay, Orchard, Sentosa, Bugis, Clarke Quay, Tanjong Pagar, Katong, Novena, Jurong East, Tampines, Woodlands, Punggol, Bishan, Serangoon, and Changi."),
+        ("Q3: How many restaurants does Dagsis Restaurants Dummy have in Singapore?", "Dagsis Restaurants Dummy operates exactly 15 estates spanning Marina Bay, Orchard, Sentosa, Bugis, Clarke Quay, Tanjong Pagar, Katong, Novena, Jurong East, Tampines, Woodlands, Punggol, Bishan, Serangoon, and Changi."),
         ("Q4: How do I book a table?", "Reservations can be made directly via our web studio at http://localhost:3000#reservations, or by calling our concierge line at +65 XXXXXXXXX daily from 10:00 to 22:00 SGT."),
-        ("Q5: What is the dress code across Dagsis Resturents Dummy restaurants?", "The dress code is Smart Elegant across all 15 estates. Gentlemen are requested to wear collared shirts and covered shoes. Athletic singlets, board shorts, and flip-flops are strictly prohibited during dinner."),
-        ("Q6: Are Dagsis Resturents Dummy's dishes Halal-certified?", "All poultry and beef are sourced from certified Halal suppliers. While Dagsis Resturents Dummy serves vintage wines and pork at segregated kitchen stations, dedicated Halal-friendly degustation flights are prepared with pristine segregated cookware upon 24-hour advance request."),
-        ("Q7: Can Dagsis Resturents Dummy accommodate vegan, vegetarian, or celiac diets?", "Yes. We offer dedicated 8-course Plant-Based and Celiac (Gluten-Free) degustation menus across all estates. Please inform us at least 24 hours prior to your seating."),
-        ("Q8: What is Dagsis Resturents Dummy's cancellation policy?", "Cancellations made 48+ hours in advance receive a 100% full refund. Cancellations between 24 and 48 hours forfeit 50% of the deposit. Cancellations within 24 hours or no-shows forfeit 100% of the deposit."),
+        ("Q5: What is the dress code across Dagsis Restaurants Dummy restaurants?", "The dress code is Smart Elegant across all 15 estates. Gentlemen are requested to wear collared shirts and covered shoes. Athletic singlets, board shorts, and flip-flops are strictly prohibited during dinner."),
+        ("Q6: Are Dagsis Restaurants Dummy's dishes Halal-certified?", "All poultry and beef are sourced from certified Halal suppliers. While Dagsis Restaurants Dummy serves vintage wines and pork at segregated kitchen stations, dedicated Halal-friendly degustation flights are prepared with pristine segregated cookware upon 24-hour advance request."),
+        ("Q7: Can Dagsis Restaurants Dummy accommodate vegan, vegetarian, or celiac diets?", "Yes. We offer dedicated 8-course Plant-Based and Celiac (Gluten-Free) degustation menus across all estates. Please inform us at least 24 hours prior to your seating."),
+        ("Q8: What is Dagsis Restaurants Dummy's cancellation policy?", "Cancellations made 48+ hours in advance receive a 100% full refund. Cancellations between 24 and 48 hours forfeit 50% of the deposit. Cancellations within 24 hours or no-shows forfeit 100% of the deposit."),
         ("Q9: What is the deposit requirement for reservations?", "A deposit of SGD $100 per guest is required for main dining reservations. For Private Dining Salons, a deposit of SGD $500 per booking is required. Deposits are deducted from your final bill."),
         ("Q10: May I bring my own wine (BYOB)? What is the corkage fee?", "Yes. Corkage is SGD $120 per 750ml bottle (maximum 2 bottles per table). Corkage is waived on a 1-for-1 basis for every bottle purchased from our Grand Cru reserve list. Outside spirits are prohibited."),
         ("Q11: May I bring an outside birthday cake?", "Yes. A cake service fee of SGD $60 per cake applies, which includes table-side gold-leaf plating, berry coulis presentation, and custom celebratory chocolate calligraphy."),
-        ("Q12: Are children allowed at Dagsis Resturents Dummy?", "For dinner, children aged 7 and above are welcome in the main dining rooms. Children of all ages are warmly welcomed in our Private Dining Salons (PVT001–030) and during weekend luncheon services."),
-        ("Q13: Who is Dagsis Resturents Dummy's Executive Culinary Director?", "Chef Antoine Dubois (CHF001), possessing 24 years of classical French and Straits botanical mastery, leads Dagsis Resturents Dummy's flagship culinary direction."),
-        ("Q14: Who heads Straits Heritage and Peranakan gastronomy?", "Chef Mei Ling (CHF002), a Katong native with 18 years of experience, directs Dagsis Resturents Dummy's contemporary Peranakan and botanical fermentation programs."),
-        ("Q15: What is Dagsis Resturents Dummy's omakase restaurant?", "Restaurant 4 (RST004) in Bugis is a 14-seat sanctuary led by Master Kenjiro Tanaka (CHF003), featuring a 200-year-old Hinoki counter and Toyosu seafood."),
+        ("Q12: Are children allowed at Dagsis Restaurants Dummy?", "For dinner, children aged 7 and above are welcome in the main dining rooms. Children of all ages are warmly welcomed in our Private Dining Salons (PVT001–030) and during weekend luncheon services."),
+        ("Q13: Who is Dagsis Restaurants Dummy's Executive Culinary Director?", "Chef Antoine Dubois (CHF001), possessing 24 years of classical French and Straits botanical mastery, leads Dagsis Restaurants Dummy's flagship culinary direction."),
+        ("Q14: Who heads Straits Heritage and Peranakan gastronomy?", "Chef Mei Ling (CHF002), a Katong native with 18 years of experience, directs Dagsis Restaurants Dummy's contemporary Peranakan and botanical fermentation programs."),
+        ("Q15: What is Dagsis Restaurants Dummy's omakase restaurant?", "Restaurant 4 (RST004) in Bugis is a 14-seat sanctuary led by Master Kenjiro Tanaka (CHF003), featuring a 200-year-old Hinoki counter and Toyosu seafood."),
         ("Q16: What is the price range of tasting menus?", "Seasonal degustation flights range from SGD $228++ to $388++ per guest. Bespoke Private Dining 8-course flights range from $280++ to $450++ per guest."),
-        ("Q17: Does Dagsis Resturents Dummy offer islandwide food delivery?", "Yes. We deliver across all 50 Singapore postal zones (Zone 1 to Zone 50) using dual-zone thermal containers (68°C hot / -2°C chilled)."),
+        ("Q17: Does Dagsis Restaurants Dummy offer islandwide food delivery?", "Yes. We deliver across all 50 Singapore postal zones (Zone 1 to Zone 50) using dual-zone thermal containers (68°C hot / -2°C chilled)."),
         ("Q18: What is the minimum spend for delivery?", "The minimum order is SGD $120. Standard delivery fee is SGD $18, and delivery is completely free for orders of SGD $250 and above."),
         ("Q19: How fast is delivery dispatch?", "Deliveries arrive within 25 to 55 minutes depending on your postal zone, driven by white-glove chauffeurs."),
-        ("Q20: What are Dagsis Resturents Dummy's Private Dining packages?", "We offer 30 private packages (PVT001–PVT030) accommodating 8 to 30 guests with minimum spends from SGD $2,800 to $13,000+, including dedicated sommeliers and acoustic privacy."),
-        ("Q21: Does Dagsis Resturents Dummy cater for weddings and corporate galas?", "Yes. We offer 50 catering packages (CAT001–CAT050) spanning Corporate State Banquets, Grand Weddings, Superyacht Soirées, and Mobile Michelin Kitchens."),
+        ("Q20: What are Dagsis Restaurants Dummy's Private Dining packages?", "We offer 30 private packages (PVT001–PVT030) accommodating 8 to 30 guests with minimum spends from SGD $2,800 to $13,000+, including dedicated sommeliers and acoustic privacy."),
+        ("Q21: Does Dagsis Restaurants Dummy cater for weddings and corporate galas?", "Yes. We offer 50 catering packages (CAT001–CAT050) spanning Corporate State Banquets, Grand Weddings, Superyacht Soirées, and Mobile Michelin Kitchens."),
         ("Q22: What credit card promotions are currently active?", "Through 40 partnerships (PRO001–PRO040), cardholders of Amex Centurion, DBS Altitude, UOB Reserve, and OCBC Voyage receive complimentary vintage champagne, cellar tours, and chauffeur transfers."),
         ("Q23: How do I redeem a promotion code?", "Quote the promo code (e.g. DAGSIS-PRO001) during online booking or mention it to our telephone concierge when confirming your table."),
-        ("Q24: What are the 4 Seasonal Movements at Dagsis Resturents Dummy?", "Monsoon Equinox Orchid Collection (Nov–Feb), Midsummer Straits Marine Harvest (Mar–Jun), Autumn Solstice Truffle & Bincho (Jul–Oct), and Winter Imperial Cacao (Equinox Gala)."),
+        ("Q24: What are the 4 Seasonal Movements at Dagsis Restaurants Dummy?", "Monsoon Equinox Orchid Collection (Nov–Feb), Midsummer Straits Marine Harvest (Mar–Jun), Autumn Solstice Truffle & Bincho (Jul–Oct), and Winter Imperial Cacao (Equinox Gala)."),
         ("Q25: Can I book a Chef's Table masterclass?", "Yes. We host 50 events annually (EVT001–EVT050) including 8-seat Chef's Counter masterclasses, Grand Cru wine nights, and seasonal launches."),
-        ("Q26: What is Dagsis Resturents Dummy's Michelin Star standing?", "Dagsis Resturents Dummy holds Three Michelin Stars at Marina Bay (RST001) and Orchard (RST002), Two Michelin Stars at Sentosa (RST003), Bugis (RST004), and Serangoon (RST014), One Star at 5 estates, and a Michelin Green Star at Bishan (RST013)."),
+        ("Q26: What is Dagsis Restaurants Dummy's Michelin Star standing?", "Dagsis Restaurants Dummy holds Three Michelin Stars at Marina Bay (RST001) and Orchard (RST002), Two Michelin Stars at Sentosa (RST003), Bugis (RST004), and Serangoon (RST014), One Star at 5 estates, and a Michelin Green Star at Bishan (RST013)."),
         ("Q27: Where do you source your ingredients?", "We source 200 botanicals and terroir ingredients from Jurong Urban Hydroponics, Hokkaido, Cameron Highlands, Kagoshima, Brittany, Tasmania, and Piedmont."),
         ("Q28: Is parking available at the restaurants?", "Yes. Complimentary valet concierge is provided at Marina Bay (RST001), Orchard (RST002), Sentosa (RST003), Clarke Quay (RST005), and Serangoon (RST014)."),
         ("Q29: What happens if I am running late for my booking?", "Tables are held for a grace period of 20 minutes. Please call +65 XXXXXXXXX if you anticipate delays so our brigade can adjust your course timings."),
@@ -1509,7 +1509,7 @@ def build_pdf():
         [
             Paragraph("<b>DOCUMENT VALIDATION CERTIFICATE</b><br/>"
                       "This Knowledge Base has been compiled, indexed, and cryptographically verified against the official "
-                      "Dagsis Resturents Dummy F&B Master Dataset. All 15 estates, 20 categories, 300 items, 100 signatures, 50 chefs, "
+                      "Dagsis Restaurants Dummy F&B Master Dataset. All 15 estates, 20 categories, 300 items, 100 signatures, 50 chefs, "
                       "200 ingredients, 30 private salons, 50 catering packages, 30 seasonal menus, 50 events, 40 promotions, "
                       "50 delivery zones, 150 reservations, and 300 reviews are 100% complete and authoritative.",
                       style_table_cell_secondary)
@@ -1537,9 +1537,9 @@ def build_pdf():
         os.makedirs(os.path.dirname(public_pdf), exist_ok=True)
         shutil.copyfile(output_pdf, public_pdf)
         
-        # Also maintain DAGSIS_RESTURENTS_DUMMY_AI_KNOWLEDGE_BASE.pdf
-        dagsis_pdf = os.path.join(output_dir, "DAGSIS_RESTURENTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
-        dagsis_public = os.path.join(output_dir, "public", "DAGSIS_RESTURENTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
+        # Also maintain DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf
+        dagsis_pdf = os.path.join(output_dir, "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
+        dagsis_public = os.path.join(output_dir, "public", "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
         shutil.copyfile(output_pdf, dagsis_pdf)
         shutil.copyfile(output_pdf, dagsis_public)
         print(f"Copied PDF to: {public_pdf}, {dagsis_pdf}, {dagsis_public}")

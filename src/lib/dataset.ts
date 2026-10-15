@@ -279,7 +279,7 @@ export const SPOTLIGHT_CHEFS = [
     profilePic: '/chefs/chef-1.jpg',
     specialty: 'Modern French Haute Cuisine & Tropical Singapore Botanicals',
     philosophy: 'Gastronomy is architecture you can taste. Every plate must balance the tension between memory, terroir, and immaculate technical discipline.',
-    story: 'Trained under multi-starred mentors in Paris and Lyon before falling in love with the vibrant botanical complexity of the Singapore Straits in 2012. He leads Dagsis Resturents Dummy’s flagship culinary vision.',
+    story: 'Trained under multi-starred mentors in Paris and Lyon before falling in love with the vibrant botanical complexity of the Singapore Straits in 2012. He leads Dagsis Restaurants Dummy’s flagship culinary vision.',
     signatureDish: 'Glazed Brittany Turbot with Kaffir Lime & Sea Urchin Velouté',
     signatureDishId: 'SIG001',
     estateId: 'RST001',
@@ -311,7 +311,7 @@ export const SPOTLIGHT_CHEFS = [
     profilePic: '/chefs/chef-3.jpg',
     specialty: 'Edomae Precision & Deep-Sea Crustacean Curation',
     philosophy: 'The fish and the knife must breathe as one. The highest respect for the ocean is to serve each morsel at the exact temperature of human vitality.',
-    story: 'With over three decades behind traditional Hinoki counters in Ginza, Tokyo, Chef Tanaka was invited to Singapore to establish Dagsis Resturents Dummy’s peerless omakase and raw bar traditions.',
+    story: 'With over three decades behind traditional Hinoki counters in Ginza, Tokyo, Chef Tanaka was invited to Singapore to establish Dagsis Restaurants Dummy’s peerless omakase and raw bar traditions.',
     signatureDish: 'Wild Shizuoka Kinmedai lightly torched over Bincho-tan with Sudachi Caviar',
     signatureDishId: 'SIG003',
     estateId: 'RST004',
@@ -327,7 +327,7 @@ export const SPOTLIGHT_CHEFS = [
     profilePic: '/chefs/chef-4.jpg',
     specialty: 'Modern Mediterranean & Grand Cru Pairing Architecture',
     philosophy: 'Wine does not simply accompany food; they engage in a philosophical dialogue that elevates dining into pure poetry.',
-    story: 'Former head sommelier and chef de cuisine across prestigious cellars in Piedmont and Tuscany, Marco orchestrates Dagsis Resturents Dummy’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.',
+    story: 'Former head sommelier and chef de cuisine across prestigious cellars in Piedmont and Tuscany, Marco orchestrates Dagsis Restaurants Dummy’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.',
     signatureDish: 'Aged Carnaroli Risotto with Hand-Dived Langoustine & White Alba Truffle',
     signatureDishId: 'SIG004',
     estateId: 'RST008',
@@ -477,7 +477,7 @@ export function getIngredientDetails(ing: RawIngredient, index: number) {
   ];
 
   const stories = [
-    'Cultivated specifically for Dagsis Resturents Dummy under controlled micro-climate parameters to ensure maximum essential oil potency.',
+    'Cultivated specifically for Dagsis Restaurants Dummy under controlled micro-climate parameters to ensure maximum essential oil potency.',
     'Harvested at sunrise by artisanal diving families practicing sustainable cyclical rotation for over four generations.',
     'Flown in via climate-controlled courier within 18 hours of harvest directly from the source to our kitchen.',
     'Grown on volcanic nutrient-rich soil without synthetic fertilizers, irrigated purely with natural spring water.',
@@ -512,7 +512,7 @@ export const REVIEW_CRITICS = [
 ];
 
 export const REVIEW_QUOTES = [
-  'A triumph of Southeast Asian botanical poetry and French technical restraint. Dagsis Resturents Dummy has rewritten the boundaries of fine dining in Singapore.',
+  'A triumph of Southeast Asian botanical poetry and French technical restraint. Dagsis Restaurants Dummy has rewritten the boundaries of fine dining in Singapore.',
   'From the first sip of the torch ginger consommé to the final notes of the smoked cocoa soufflé, every single element was executed with flawless poise.',
   'The most breathtaking dining view in Asia paired with an omakase counter that rivals the very finest temples of Ginza.',
   'An unforgettable masterclass in hospitality. The sommelier pairing journey alone deserves an international pilgrimage.',

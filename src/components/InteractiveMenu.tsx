@@ -293,7 +293,7 @@ export default function InteractiveMenu() {
                   <div className="space-y-4 mb-6">
                     <div>
                       <span className="text-[10px] font-modern uppercase tracking-widest text-[#A63A2B] block mb-1">
-                        Dagsis Resturents Dummy Preparation Method
+                        Dagsis Restaurants Dummy Preparation Method
                       </span>
                       <p className="text-sm font-sans text-[#5A4A42] leading-relaxed">
                         {activeDish.description}

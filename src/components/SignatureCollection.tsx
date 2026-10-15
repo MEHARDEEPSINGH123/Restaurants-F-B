@@ -191,7 +191,7 @@ export default function SignatureCollection() {
                 <div className="flex items-center justify-between border-b border-[#E7DFD4] pb-6 mb-8">
                   <div>
                     <span className="text-[10px] font-modern uppercase tracking-[0.3em] text-[#C8A96A]">
-                      The Complete Dagsis Resturents Dummy Archive
+                      The Complete Dagsis Restaurants Dummy Archive
                     </span>
                     <h3 className="font-editorial text-3xl md:text-4xl text-[#1B1B1B]">
                       All 100 Signature Dishes

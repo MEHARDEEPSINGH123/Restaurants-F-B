@@ -107,7 +107,7 @@ export default function CateringExperience() {
           </div>
           <div className="mt-6 md:mt-0 max-w-md">
             <p className="font-sans text-sm md:text-base text-[#5A4A42] leading-relaxed font-light">
-              We bring the theatrical artistry of Dagsis Resturents Dummy&apos;s Michelin kitchens to Singapore&apos;s most
+              We bring the theatrical artistry of Dagsis Restaurants Dummy&apos;s Michelin kitchens to Singapore&apos;s most
               magnificent ballrooms, superyachts, and private colonial villas.
             </p>
             <button

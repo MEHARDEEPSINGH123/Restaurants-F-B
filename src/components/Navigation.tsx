@@ -171,7 +171,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
                   : 'text-[#FFFDF8] group-hover:text-[#E8D3A7]'
               }`}
             >
-              Dagsis Resturents Dummy
+              Dagsis Restaurants Dummy
             </span>
             <span
               className={`font-modern text-[7.5px] sm:text-[8px] md:text-[8.5px] uppercase tracking-[0.22em] font-medium -mt-0.5 transition-colors duration-300 whitespace-nowrap ${
@@ -249,7 +249,7 @@ export default function Navigation({ onOpenReserve }: NavigationProps) {
             {/* Bottom Estate Info */}
             <div className="max-w-4xl mx-auto w-full pt-8 border-t border-[#E7DFD4] mt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs font-modern text-[#5A4A42]">
               <div>
-                <p className="font-medium text-[#1B1B1B]">Dagsis Resturents Dummy Concierge</p>
+                <p className="font-medium text-[#1B1B1B]">Dagsis Restaurants Dummy Concierge</p>
                 <p>123, Street ABC, State XYZ, Pin-000000</p>
               </div>
               <div className="flex items-center gap-6">

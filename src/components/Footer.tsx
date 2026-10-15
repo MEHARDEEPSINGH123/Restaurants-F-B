@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="font-editorial text-3xl sm:text-4xl md:text-5xl tracking-[0.16em] font-light uppercase text-[#FFFDF8]">
-                Dagsis Resturents Dummy
+                Dagsis Restaurants Dummy
               </span>
               <span className="w-2 h-2 rounded-full bg-[#C8A96A]" />
             </div>
@@ -51,7 +51,7 @@ export default function Footer() {
         {/* Col 1: Brand & Philosophy */}
         <div className="lg:col-span-4 space-y-4">
           <span className="text-[10px] font-modern uppercase tracking-[0.3em] text-[#C8A96A] block">
-            The Dagsis Resturents Dummy Manifesto
+            The Dagsis Restaurants Dummy Manifesto
           </span>
           <p className="font-sans text-xs md:text-sm text-[#E7DFD4]/75 leading-relaxed font-light">
             Founded in Singapore as an architectural sanctuary for haute gastronomy. We unite 15 Singapore
@@ -124,7 +124,7 @@ export default function Footer() {
       {/* Bottom Colophon Bar */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-8 border-t border-[#5A4A42]/30 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-modern uppercase tracking-widest text-[#E7DFD4]/50">
         <div>
-          &copy; 2026 Dagsis Resturents Dummy Pte. Ltd. All Rights Reserved.
+          &copy; 2026 Dagsis Restaurants Dummy Pte. Ltd. All Rights Reserved.
         </div>
         <div className="flex items-center gap-6">
           <span>Terms of Degustation</span>

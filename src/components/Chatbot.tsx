@@ -14,7 +14,7 @@ declare global {
 
 const AGENT_ID = 'f8936f57-7797-42e2-8205-9ccb77805526';
 const API_KEY = '77958730-d7d9-43f8-bcc3-3dc5e33ffea7';
-const AGENT_NAME = 'Dagsis Resturents Dummy Concierge';
+const AGENT_NAME = 'Dagsis Restaurants Dummy Concierge';
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +54,7 @@ export default function Chatbot() {
               </div>
               <div>
                 <h3 className="text-xs font-serif font-light tracking-[0.16em] uppercase text-[#FFFDF8]">
-                  Dagsis Resturents Dummy
+                  Dagsis Restaurants Dummy
                 </h3>
                 <p className="text-[9px] font-mono tracking-wider text-[#C8A96A]">
                   AI Gastronomy Assistant · Active
@@ -104,7 +104,7 @@ export default function Chatbot() {
               )}#apiKey=${encodeURIComponent(API_KEY)}`}
               className="w-full h-full border-none"
               allow="clipboard-write"
-              title="Dagsis Resturents Dummy Concierge"
+              title="Dagsis Restaurants Dummy Concierge"
               onLoad={() => setIsLoading(false)}
             />
           </div>
@@ -115,7 +115,7 @@ export default function Chatbot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="group relative flex items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 rounded-full bg-[#1B1B1B] text-[#FFFDF8] border border-[#C8A96A] shadow-[0_8px_30px_rgba(27,27,27,0.35)] hover:bg-[#A63A2B] hover:border-[#A63A2B] hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none"
-        aria-label="Toggle Dagsis Resturents Dummy Concierge"
+        aria-label="Toggle Dagsis Restaurants Dummy Concierge"
       >
         {isOpen ? (
           <X className="w-5 h-5 text-[#C8A96A] group-hover:text-white transition-colors" />

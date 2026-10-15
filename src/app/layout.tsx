@@ -26,11 +26,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Dagsis Resturents Dummy | Every Dish Tells A Story — Haute Gastronomie',
+  title: 'Dagsis Restaurants Dummy | Every Dish Tells A Story — Haute Gastronomie',
   description:
     'Singapore’s destination for exceptional Michelin-level dining experiences, editorial chef showcases, bespoke omakase, and private dining salons across 15 estates.',
   keywords: [
-    'Dagsis Resturents Dummy',
+    'Dagsis Restaurants Dummy',
     'Fine Dining Singapore',
     'Michelin Restaurant Singapore',
     'Marina Bay Gastronomy',
