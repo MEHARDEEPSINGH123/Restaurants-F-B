@@ -1,15 +1,18 @@
-# Dagsis Restaurants Dummy - AI Chatbot Master Knowledge Base PDF Generator
+# Fine Dining & Culinary Collective - AI Chatbot Master Knowledge Base PDF Generator
 # Compiles complete grounding reference for LLMs, RAG vectors, and concierge staff.
+# Absolutely NO company names; 100% neutral haute gastronomie collective terminology.
 
 import json
 import os
 import sys
+import shutil
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.pdfgen import canvas
+import re
 from reportlab.platypus import (
     SimpleDocTemplate,
-    Paragraph,
+    Paragraph as _BaseParagraph,
     Spacer,
     Table,
     TableStyle,
@@ -20,10 +23,18 @@ from reportlab.platypus import (
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 
+# Safe Paragraph that automatically converts unescaped & to &amp; for clean PDF rendering
+class Paragraph(_BaseParagraph):
+    def __init__(self, text, style, *args, **kwargs):
+        if isinstance(text, str):
+            text = re.sub(r'&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)', '&amp;', text)
+        super().__init__(text, style, *args, **kwargs)
+
+
 # ---------------------------------------------------------
 # Two-Pass Numbered Canvas for Running Headers & Footers
 # ---------------------------------------------------------
-class SavoraNumberedCanvas(canvas.Canvas):
+class NumberedCanvas(canvas.Canvas):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._saved_page_states = []
@@ -48,14 +59,14 @@ class SavoraNumberedCanvas(canvas.Canvas):
         self.saveState()
         page_width, page_height = A4
 
-        # Top Running Header
+        # Top Running Header (Neutral luxury collective branding - zero company names)
         self.setFont("Helvetica-Bold", 7.5)
         self.setFillColor(colors.HexColor("#C8A96A"))  # Gold
-        self.drawString(36, page_height - 30, "DAGSIS RESTAURANTS DUMMY")
+        self.drawString(36, page_height - 30, "FINE DINING & CULINARY COLLECTIVE")
 
         self.setFont("Helvetica", 7.5)
         self.setFillColor(colors.HexColor("#5A4A42"))
-        self.drawString(130, page_height - 30, "·  HAUTE GASTRONOMIE  ·  AI CHATBOT KNOWLEDGE BASE")
+        self.drawString(185, page_height - 30, "·  HAUTE GASTRONOMIE  ·  AI CHATBOT KNOWLEDGE BASE")
 
         self.drawRightString(page_width - 36, page_height - 30, "CONCIERGE GROUNDING MANUAL")
 
@@ -83,14 +94,31 @@ class SavoraNumberedCanvas(canvas.Canvas):
 def load_dataset():
     path = os.path.join(os.path.dirname(__file__), "..", "src", "data", "savora_fnb_data.json")
     with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+        raw = json.load(f)
+
+    # Sanitize dataset: strip any company names so no brand names can leak into tables
+    clean = json.loads(json.dumps(raw))
+    clean['brand'] = "Fine Dining & Culinary Collective"
+    for rest in clean.get('restaurants', []):
+        rest['name'] = rest['name'].replace('Savora ', '').replace('Dagsis ', '')
+        if not rest['name'].startswith('Restaurant '):
+            rest['name'] = f"Restaurant {rest['id'].replace('RST', '')}"
+    return clean
 
 
 def build_pdf():
     raw_data = load_dataset()
     output_dir = os.path.join(os.path.dirname(__file__), "..")
-    output_pdf = os.path.join(output_dir, "SAVORA_SINGAPORE_AI_KNOWLEDGE_BASE.pdf")
-    public_pdf = os.path.join(output_dir, "public", "SAVORA_SINGAPORE_AI_KNOWLEDGE_BASE.pdf")
+    
+    # Primary Neutral PDF Output
+    primary_pdf = os.path.join(output_dir, "RESTAURANTS_FNB_AI_KNOWLEDGE_BASE.pdf")
+    public_primary_pdf = os.path.join(output_dir, "public", "RESTAURANTS_FNB_AI_KNOWLEDGE_BASE.pdf")
+
+    # Compatibility PDF targets
+    dagsis_pdf = os.path.join(output_dir, "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
+    dagsis_public = os.path.join(output_dir, "public", "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
+    savora_pdf = os.path.join(output_dir, "SAVORA_SINGAPORE_AI_KNOWLEDGE_BASE.pdf")
+    savora_public = os.path.join(output_dir, "public", "SAVORA_SINGAPORE_AI_KNOWLEDGE_BASE.pdf")
 
     # Document Geometry
     page_width, page_height = A4
@@ -98,7 +126,7 @@ def build_pdf():
     printable_width = page_width - (margin * 2)  # 523.27 pt
 
     doc = SimpleDocTemplate(
-        output_pdf,
+        primary_pdf,
         pagesize=A4,
         leftMargin=margin,
         rightMargin=margin,
@@ -121,112 +149,121 @@ def build_pdf():
     # Typography Styles
     style_cover_title = ParagraphStyle(
         "CoverTitle",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=30,
-        leading=36,
+        fontSize=25,
+        leading=30,
         textColor=c_primary,
         alignment=0,
     )
     style_cover_subtitle = ParagraphStyle(
         "CoverSubtitle",
-        fontName="Helvetica-Bold",
+        parent=styles["Normal"],
+        fontName="Helvetica",
         fontSize=13,
-        leading=18,
+        leading=17,
         textColor=c_accent,
         alignment=0,
     )
     style_cover_body = ParagraphStyle(
         "CoverBody",
+        parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=9.5,
-        leading=15,
+        fontSize=9,
+        leading=13.5,
         textColor=c_secondary,
     )
     style_chapter_h1 = ParagraphStyle(
         "ChapterH1",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=17,
-        leading=22,
+        fontSize=15,
+        leading=19,
         textColor=c_primary,
-        spaceBefore=14,
-        spaceAfter=6,
+        spaceAfter=4,
         keepWithNext=True,
     )
     style_section_h2 = ParagraphStyle(
         "SectionH2",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=12,
-        leading=16,
+        fontSize=10.5,
+        leading=14,
         textColor=c_accent,
-        spaceBefore=10,
-        spaceAfter=4,
-        keepWithNext=True,
-    )
-    style_section_h3 = ParagraphStyle(
-        "SectionH3",
-        fontName="Helvetica-Bold",
-        fontSize=9.5,
-        leading=13,
-        textColor=c_primary,
-        spaceBefore=6,
+        spaceBefore=7,
         spaceAfter=3,
         keepWithNext=True,
     )
     style_body = ParagraphStyle(
-        "BodyDark",
-        fontName="Helvetica",
-        fontSize=8.5,
-        leading=12.5,
-        textColor=c_primary,
-        spaceAfter=5,
-    )
-    style_body_muted = ParagraphStyle(
-        "BodyMuted",
+        "Body",
+        parent=styles["Normal"],
         fontName="Helvetica",
         fontSize=8,
         leading=11.5,
-        textColor=c_secondary,
-    )
-    style_callout = ParagraphStyle(
-        "CalloutText",
-        fontName="Helvetica",
-        fontSize=8.5,
-        leading=12.5,
         textColor=c_primary,
+        spaceAfter=4,
+    )
+    style_body_secondary = ParagraphStyle(
+        "BodySecondary",
+        parent=styles["Normal"],
+        fontName="Helvetica",
+        fontSize=7.5,
+        leading=10.5,
+        textColor=c_secondary,
     )
     style_table_header = ParagraphStyle(
         "TableHeader",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
         fontSize=7.5,
         leading=9.5,
         textColor=colors.white,
-        alignment=0,
     )
     style_table_cell = ParagraphStyle(
         "TableCell",
+        parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=7.2,
+        fontSize=7,
         leading=9.2,
         textColor=c_primary,
     )
     style_table_cell_bold = ParagraphStyle(
         "TableCellBold",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.2,
+        fontSize=7,
         leading=9.2,
         textColor=c_primary,
     )
+    style_table_cell_secondary = ParagraphStyle(
+        "TableCellSec",
+        parent=styles["Normal"],
+        fontName="Helvetica",
+        fontSize=6.5,
+        leading=8.5,
+        textColor=c_secondary,
+    )
     style_table_cell_gold = ParagraphStyle(
         "TableCellGold",
+        parent=styles["Normal"],
         fontName="Helvetica-Bold",
-        fontSize=7.2,
+        fontSize=7,
         leading=9.2,
-        textColor=c_accent,
+        textColor=colors.HexColor("#8C6B28"),
     )
-    style_table_cell_secondary = ParagraphStyle(
-        "TableCellSecondary",
+    style_toc_title = ParagraphStyle(
+        "TOCTitle",
+        parent=styles["Normal"],
+        fontName="Helvetica-Bold",
+        fontSize=8.5,
+        leading=11,
+        textColor=c_primary,
+    )
+    style_toc_desc = ParagraphStyle(
+        "TOCDesc",
+        parent=styles["Normal"],
         fontName="Helvetica",
-        fontSize=6.8,
+        fontSize=7,
         leading=8.8,
         textColor=c_secondary,
     )
@@ -237,9 +274,9 @@ def build_pdf():
     # COVER PAGE
     # =========================================================================
     story.append(Spacer(1, 20))
-    # Brand Top Pill Badge
+    # Brand Top Pill Badge - Zero company name
     pill_data = [[
-        Paragraph("<font color='#C8A96A'><b>DAGSIS RESTAURANTS DUMMY</b></font>  ·  HAUTE GASTRONOMIE  ·  EST. SINGAPORE", style_table_cell_bold),
+        Paragraph("<font color='#C8A96A'><b>FINE DINING & CULINARY COLLECTIVE</b></font>  ·  HAUTE GASTRONOMIE  ·  EST. SINGAPORE", style_table_cell_bold),
         Paragraph("<font color='#5A4A42'><b>DOC REF: KB-AI-2026-V1</b></font>", style_table_cell_secondary)
     ]]
     t_pill = Table(pill_data, colWidths=[360, 163])
@@ -255,7 +292,7 @@ def build_pdf():
     story.append(t_pill)
     story.append(Spacer(1, 35))
 
-    story.append(Paragraph("DAGSIS RESTAURANTS DUMMY", style_cover_title))
+    story.append(Paragraph("FINE DINING & CULINARY COLLECTIVE", style_cover_title))
     story.append(Spacer(1, 4))
     story.append(Paragraph("OMNISCIENT CONCIERGE & AI CHATBOT KNOWLEDGE BASE", style_cover_subtitle))
     story.append(Spacer(1, 8))
@@ -265,10 +302,10 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1.5, color=c_accent, spaceBefore=4, spaceAfter=16))
 
     cover_desc = (
-        "This master document serves as the single source of truth for the Dagsis Restaurants Dummy "
+        "This master document serves as the single source of truth for the Fine Dining & Culinary Collective "
         "Intelligent Concierge Bot, Retrieval-Augmented Generation (RAG) knowledge vectors, "
         "fine-tuning pipelines, and operational VIP guest relations staff. It encapsulates the "
-        "entirety of Dagsis Restaurants Dummy's 15 restaurant estates, 20 menu categories, 300 curated dishes, "
+        "entirety of the Collective's 15 restaurant estates, 20 menu categories, 300 curated dishes, "
         "100 signature creations, 50 master chefs, 200 terroir botanical ingredients, 30 private dining "
         "packages, 50 luxury catering offerings, 30 seasonal degustations, 50 events, 40 privileges, "
         "50 Singapore delivery postal zones, booking policies, guest sentiment, and comprehensive "
@@ -318,14 +355,16 @@ def build_pdf():
     story.append(t_stats)
     story.append(Spacer(1, 24))
 
-    # Executive Metadata Block
+    # Executive Metadata Block - Explicitly updated with requested neutral details
     meta_data = [
+        [Paragraph("<b>Collective Name:</b>", style_table_cell_bold), Paragraph("Fine Dining & Culinary Collective", style_table_cell)],
         [Paragraph("<b>Target Audience:</b>", style_table_cell_bold), Paragraph("LLM Systems, Conversational RAG Agents, VIP Guest Relations Managers", style_table_cell)],
         [Paragraph("<b>Primary Domain:</b>", style_table_cell_bold), Paragraph("Luxury Haute Cuisine, Straits Heritage Gastronomy, Singapore Hospitality", style_table_cell)],
-        [Paragraph("<b>Concierge Hotline:</b>", style_table_cell_bold), Paragraph("+65 XXXXXXXXX (Operating Daily 10:00 – 22:00 SGT)", style_table_cell)],
+        [Paragraph("<b>Mobile / Hotline:</b>", style_table_cell_bold), Paragraph("+65 XXXXXXXXX (Operating Daily 10:00 – 22:00 SGT)", style_table_cell)],
         [Paragraph("<b>Primary Address:</b>", style_table_cell_bold), Paragraph("123, Street ABC, State XYZ, Pin-000000", style_table_cell)],
-        [Paragraph("<b>VIP Reservations:</b>", style_table_cell_bold), Paragraph("concierge@dagsisrestaurants.com  |  Direct Portal: http://localhost:3000#reservations", style_table_cell)],
-        [Paragraph("<b>Authoritative Data:</b>", style_table_cell_bold), Paragraph("savora_fnb_data.json (Dagsis Fine Dining & Beverage Registry)", style_table_cell)],
+        [Paragraph("<b>Email ID:</b>", style_table_cell_bold), Paragraph("concierge@diningcollective.com", style_table_cell)],
+        [Paragraph("<b>VIP Reservations:</b>", style_table_cell_bold), Paragraph("concierge@diningcollective.com  |  Direct Portal: http://localhost:3000#reservations", style_table_cell)],
+        [Paragraph("<b>Authoritative Data:</b>", style_table_cell_bold), Paragraph("Master F&B Dataset (Fine Dining & Culinary Registry)", style_table_cell)],
     ]
     t_meta = Table(meta_data, colWidths=[120, 403])
     t_meta.setStyle(TableStyle([
@@ -368,19 +407,19 @@ def build_pdf():
     toc_table_data = []
     for chap, title, desc in toc_items:
         toc_table_data.append([
-            Paragraph(f"<b>{chap}</b>", style_table_cell_gold),
-            Paragraph(f"<b>{title}</b><br/><font color='#5A4A42'>{desc}</font>", style_table_cell),
+            Paragraph(f"<b>{chap}</b>", style_toc_title),
+            Paragraph(f"<b>{title}</b><br/>{desc}", style_toc_desc),
         ])
 
-    t_toc = Table(toc_table_data, colWidths=[65, 458])
+    t_toc = Table(toc_table_data, colWidths=[90, 433.27])
     t_toc.setStyle(TableStyle([
         ('BOX', (0, 0), (-1, -1), 0.6, c_border),
         ('INNERGRID', (0, 0), (-1, -1), 0.4, c_border),
-        ('BACKGROUND', (0, 0), (0, -1), c_bg_card),
-        ('TOPPADDING', (0, 0), (-1, -1), 5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
-        ('LEFTPADDING', (0, 0), (-1, -1), 7),
-        ('RIGHTPADDING', (0, 0), (-1, -1), 7),
+        ('ROWBACKGROUNDS', (0, 0), (-1, -1), [colors.white, c_table_alt]),
+        ('TOPPADDING', (0, 0), (-1, -1), 4.5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4.5),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
     ]))
     story.append(t_toc)
 
@@ -394,30 +433,30 @@ def build_pdf():
 
     story.append(Paragraph("1.1 Executive Brand Essence & Gastronomic Philosophy", style_section_h2))
     p1 = (
-        "<b>Dagsis Restaurants Dummy</b> is the apex dining collective and hospitality group in Southeast Asia, "
+        "<b>The Fine Dining & Culinary Collective</b> is the apex dining collective and hospitality group in Southeast Asia, "
         "operating 15 distinguished estates across the island republic. Under the eternal motto "
-        "<i>'Every Dish Tells A Story'</i>, Dagsis Restaurants Dummy articulates Singapore's rich spice-route heritage, "
+        "<i>'Every Dish Tells A Story'</i>, the Collective articulates Singapore's rich spice-route heritage, "
         "maritime trading history, indigenous botanicals, and classical culinary disciplines into singular, "
-        "transformative tasting journeys. Across its portfolio, Dagsis Restaurants Dummy commands multiple Michelin Stars and "
+        "transformative tasting journeys. Across its portfolio, the Collective commands multiple Michelin Stars and "
         "the coveted Michelin Green Star for sustainable gastronomy."
     )
     story.append(Paragraph(p1, style_body))
 
-    story.append(Paragraph("1.2 The Dagsis Restaurants Dummy AI Concierge Persona Specification", style_section_h2))
+    story.append(Paragraph("1.2 The AI Concierge Persona Specification", style_section_h2))
     p_persona = (
-        "When acting as the Dagsis Restaurants Dummy AI Concierge, conversational agents must adhere strictly to the following parameters:<br/>"
+        "When acting as the AI Concierge, conversational agents must adhere strictly to the following parameters:<br/>"
         "• <b>Voice & Tone:</b> Cultured, gracious, discreet, encyclopedic, warm, and Michelin-grade professional. "
         "Avoid casual slang, robotic stock phrases, or hurried dismissiveness.<br/>"
-        "• <b>Standard Greeting:</b> <i>'Welcome to Dagsis Restaurants Dummy. It is my distinct honor to assist you with our 15 culinary estates, private dining salons, or custom degustation flights. How may I orchestrate your experience today?'</i><br/>"
+        "• <b>Standard Greeting:</b> <i>'Welcome to the Fine Dining Collective. It is my distinct honor to assist you with our 15 culinary estates, private dining salons, or custom degustation flights. How may I orchestrate your experience today?'</i><br/>"
         "• <b>Pricing Transparency:</b> All rates are quoted in Singapore Dollars (SGD) and subject to a 10% Service Charge and prevailing 9% Goods and Services Tax (GST), unless stated as nett.<br/>"
-        "• <b>Direct Touchpoints:</b> Always supply the concierge contact telephone (+65 XXXXXXXXX), address (123, Street ABC, State XYZ, Pin-000000), and email (concierge@dagsisrestaurants.com) when guests require human escalation, bespoke event design, or custom dietary authorizations."
+        "• <b>Direct Touchpoints:</b> Always supply the concierge contact telephone (+65 XXXXXXXXX), address (123, Street ABC, State XYZ, Pin-000000), and email (concierge@diningcollective.com) when guests require human escalation, bespoke event design, or custom dietary authorizations."
     )
     story.append(Paragraph(p_persona, style_body))
 
     story.append(Paragraph("1.3 Standard Operating Policies & Guest Regulations", style_section_h2))
     
     policies_data = [
-        [Paragraph("<b>Policy Domain</b>", style_table_header), Paragraph("<b>Official Dagsis Regulation & Rule</b>", style_table_header), Paragraph("<b>AI Chatbot Response Directive</b>", style_table_header)],
+        [Paragraph("<b>Policy Domain</b>", style_table_header), Paragraph("<b>Official Collective Regulation & Rule</b>", style_table_header), Paragraph("<b>AI Chatbot Response Directive</b>", style_table_header)],
         [
             Paragraph("<b>Reservation Deposits</b>", style_table_cell_bold),
             Paragraph("Standard Dining: SGD $100 per guest. Private Salons: SGD $500 per booking. Deposits are credited toward the final dining bill.", style_table_cell),
@@ -446,12 +485,12 @@ def build_pdf():
         [
             Paragraph("<b>BYOB & Corkage Fee</b>", style_table_cell_bold),
             Paragraph("SGD $120 per 750ml wine bottle (limit 2 bottles per table). 1-for-1 corkage waiver applies for each bottle purchased from our Grand Cru Cellar. Strictly no outside spirits.", style_table_cell),
-            Paragraph("Highlight Dagsis Restaurants Dummy's 4,000-bottle subterranean reserves as an alternative to bringing wine.", style_table_cell_secondary),
+            Paragraph("Highlight the Collective's 4,000-bottle subterranean reserves as an alternative to bringing wine.", style_table_cell_secondary),
         ],
         [
             Paragraph("<b>Celebration Cakes</b>", style_table_cell_bold),
             Paragraph("Cake Service Fee: SGD $60 per artisanal cake brought from outside. Includes gold-leaf plating, berry coulis, custom chocolate calligraphy, and ceremonial presentation.", style_table_cell),
-            Paragraph("Remind guests that Dagsis Pastry Ateliers craft bespoke celebration cakes with 48h notice.", style_table_cell_secondary),
+            Paragraph("Remind guests that our Pastry Ateliers craft bespoke celebration cakes with 48h notice.", style_table_cell_secondary),
         ],
     ]
     t_pol = Table(policies_data, colWidths=[100, 240, 183])
@@ -475,7 +514,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy operates 15 distinct culinary estates distributed strategically across Singapore's most "
+        "The Culinary Collective operates 15 distinct culinary estates distributed strategically across Singapore's most "
         "prestigious waterfronts, heritage quarters, and scenic enclaves. Each restaurant possesses an "
         "independent culinary architecture, designated master sommelier, and distinctive dining atmosphere.",
         style_body
@@ -543,7 +582,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy's menu consists of exactly 300 dynamically cataloged dishes distributed across 20 gastronomic movements. "
+        "The Collective's menu consists of exactly 300 dynamically cataloged dishes distributed across 20 gastronomic movements. "
         "Every single dish has been calibrated with precise SGD pricing, nutritional caloric metrics, dietary flags, "
         "and sommelier wine pairing recommendations. The AI Chatbot must reference these exact prices when quoting dishes.",
         style_body
@@ -626,7 +665,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy's 100 Signature Dishes embody the pinnacle of our chefs' artistic expressions. "
+        "The 100 Signature Dishes embody the pinnacle of our chefs' artistic expressions. "
         "Unlike standard à la carte items, these creations feature ultra-rare ingredients, "
         "multigenerational fermentation processes, and tableside master culinary theatrical performances.",
         style_body
@@ -648,35 +687,39 @@ def build_pdf():
     sig_inspirations = [
         'Echoes the dawn spice markets of Little India transposed with French classical saucier craftsmanship.',
         'A loving tribute to coastal fishermen of the South China Sea, pairing pristine marine shellfish with wild mountain herbs.',
-        'Exploring the smoky alchemy of Japanese white oak charcoal and rich Peranakan rempah roots.',
-        'A delicate meditation on Singapore’s colonial spice routes, uniting nutmeg, green cardamom, and French butter.',
+        'Japanese Edomae precision reimagined through equatorial botanical infusions and binchotan woodsmoke.',
+        'Ancient Peranakan ancestral recipes modernized with modernist molecular gastronomy and clarify broths.',
+        'Highland forest foraging traditions blended with Mediterranean aged balsamic reductions and herb oils.',
     ]
+
+    sig_courses = ['Prelude & Amuse', 'Premier Entrée', 'Maritime Course', 'Terroir Centerpiece', 'Intermezzo', 'Grand Finale Pâtisserie']
 
     sig_table_data = [
         [
-            Paragraph("<b>ID / Name</b>", style_table_header),
-            Paragraph("<b>Gastronomic Title</b>", style_table_header),
-            Paragraph("<b>Course</b>", style_table_header),
-            Paragraph("<b>Terroir & Heritage Inspiration</b>", style_table_header),
-            Paragraph("<b>Grand Cru Sommelier Pairing</b>", style_table_header),
+            Paragraph("<b>Sig ID / Title</b>", style_table_header),
+            Paragraph("<b>Course Phase</b>", style_table_header),
+            Paragraph("<b>Terroir Heritage & Story</b>", style_table_header),
+            Paragraph("<b>Grand Cru Wine Pairing</b>", style_table_header),
+            Paragraph("<b>Key Botanical Elements</b>", style_table_header),
         ]
     ]
 
-    for idx, dish in enumerate(raw_data['signature_dishes']):
+    for idx, sig in enumerate(raw_data['signature_dishes']):
         title = sig_titles[idx % len(sig_titles)]
         insp = sig_inspirations[idx % len(sig_inspirations)]
-        course = 'Entrée / Amuse' if idx % 4 == 0 else ('Poisson' if idx % 4 == 1 else ('Viande / Hearth' if idx % 4 == 2 else 'Dessert & Pâtisserie'))
+        course = sig_courses[idx % len(sig_courses)]
         pairing = pairings[idx % len(pairings)]
+        botanicals = 'Torch Ginger, Wild Pepper Leaf, Kaffir Lime, Buah Keluak' if idx % 2 == 0 else 'Galangal, Lemongrass, Pandan Essence, Sea Grapes'
 
         sig_table_data.append([
-            Paragraph(f"<b>{dish['id']}</b><br/>{dish['name']}", style_table_cell_bold),
-            Paragraph(f"<b>{title}</b>", style_table_cell_gold),
+            Paragraph(f"<b>{sig['id']}</b><br/><b>{sig['name']}</b><br/><font color='#A63A2B'>{title}</font>", style_table_cell_bold),
             Paragraph(course, style_table_cell),
             Paragraph(insp, style_table_cell_secondary),
             Paragraph(pairing, style_table_cell_secondary),
+            Paragraph(botanicals, style_table_cell_secondary),
         ])
 
-    t_sig = Table(sig_table_data, colWidths=[70, 135, 75, 130, 113.27], repeatRows=1)
+    t_sig = Table(sig_table_data, colWidths=[110, 65, 140, 110, 98.27], repeatRows=1)
     t_sig.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), c_primary),
         ('BOX', (0, 0), (-1, -1), 0.6, c_border),
@@ -694,35 +737,41 @@ def build_pdf():
     # =========================================================================
     # CHAPTER 5: MASTER CHEFS & CULINARY BRIGADE DIRECTORY (50 CHEFS)
     # =========================================================================
-    story.append(Paragraph("CHAPTER 5: MASTER CHEFS & CULINARY BRIGADE (50 PROFILES)", style_chapter_h1))
+    story.append(Paragraph("CHAPTER 5: MASTER CHEFS & CULINARY BRIGADE (50 CHEFS)", style_chapter_h1))
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
-    story.append(Paragraph("5.1 Spotlight Executive Culinary Directors", style_section_h2))
+    story.append(Paragraph(
+        "The culinary brigade is helmed by 50 distinguished chefs, sauciers, and sommeliers recruited from Three-Michelin-Starred "
+        "sanctuaries across Paris, Tokyo, Kyoto, San Sebastián, and Singapore.",
+        style_body
+    ))
+
+    story.append(Paragraph("5.1 Featured Executive Culinary Directors", style_section_h2))
 
     spotlight_chefs = [
         {
             'id': 'CHF001', 'name': 'Chef Antoine Dubois', 'title': 'Executive Culinary Director', 'stars': '3 Michelin Stars',
-            'estate': 'Marina Bay Flagship (RST001)', 'exp': '24 Years', 'specialty': 'Modern French Haute Cuisine & Tropical Singapore Botanicals',
-            'dish': 'Glazed Brittany Turbot with Kaffir Lime & Sea Urchin Velouté',
-            'bio': 'Trained in Paris and Lyon under legendary 3-star masters before moving to Singapore in 2012. He balances classical saucier architecture with indigenous Southeast Asian botanicals.'
+            'estate': 'Marina Bay Flagship (RST001)', 'exp': '24 Years', 'specialty': 'Modern Classical French & Equatorial Botanicals',
+            'dish': 'Laksa-Infused Brittany Blue Lobster with Kaffir Lime Foam',
+            'bio': 'Trained under Joël Robuchon and Alain Ducasse in Paris. Antoine pioneered the synthesis of classical French saucier discipline with Southeast Asian spice-route heritage.'
         },
         {
-            'id': 'CHF002', 'name': 'Chef Mei Ling', 'title': 'Head of Straits Heritage & Botanical Innovation', 'stars': '3 Michelin Stars',
-            'estate': 'Orchard Haute Pavilion (RST002)', 'exp': '18 Years', 'specialty': 'Contemporary Peranakan & Southeast Asian Fermentation',
-            'dish': 'A5 Miyazaki Wagyu in 48-Hour Buah Keluak Glaze',
-            'bio': 'Born into a multigenerational Nyonya culinary family in Katong, Mei Ling honors ancestral sambals and heirloom rempahs by distilling them into crystal-clear essences.'
+            'id': 'CHF002', 'name': 'Chef Mei Ling', 'title': 'Master of Straits Heritage & Terroir', 'stars': '3 Michelin Stars',
+            'estate': 'Orchard Haute Heritage Pavilion (RST002)', 'exp': '18 Years', 'specialty': 'Peranakan Heirloom Fermentation & Spice Architecture',
+            'dish': 'A5 Kagoshima Wagyu in 48-Hour Buah Keluak Glaze',
+            'bio': 'Born in Katong to a fourth-generation Peranakan family, Mei Ling spent a decade researching vanishing botanical recipes and cold-pressed spice fermentations.'
         },
         {
-            'id': 'CHF003', 'name': 'Chef Kenjiro Tanaka', 'title': 'Master of Kaiseki & Omakase', 'stars': '2 Michelin Stars',
-            'estate': 'Bugis Omakase Sanctuary (RST004)', 'exp': '32 Years', 'specialty': 'Edomae Precision & Deep-Sea Crustacean Curation',
-            'dish': 'Wild Shizuoka Kinmedai lightly torched over Bincho-tan with Sudachi Caviar',
-            'bio': 'With three decades behind traditional Ginza Hinoki counters, Chef Tanaka serves each seafood cut at the exact physiological temperature of human vitality.'
+            'id': 'CHF003', 'name': 'Master Kenjiro Tanaka', 'title': 'Kaiseki & Edomae Master Shokunin', 'stars': '2 Michelin Stars',
+            'estate': 'Bugis Omakase Sanctuary (RST004)', 'exp': '28 Years', 'specialty': 'Traditional Ginza Edomae & Bincho-tan Roasting',
+            'dish': 'Wild Shizuoka Kinmedai lightly torched over White Oak Coals',
+            'bio': 'Apprenticed in Ginza for 15 years before establishing the Bugis Omakase counter. Renowned for selecting seafood exclusively at Tokyo’s Toyosu auction at 4 AM daily.'
         },
         {
             'id': 'CHF004', 'name': 'Chef Marco Rossi', 'title': 'European Haute Cuisine & Master Sommelier Director', 'stars': '2 Michelin Stars',
             'estate': 'Novena Tuscan Conservatory (RST008)', 'exp': '22 Years', 'specialty': 'Modern Mediterranean & Grand Cru Pairing Architecture',
             'dish': 'Aged Carnaroli Risotto with Langoustine & White Alba Truffle',
-            'bio': 'Former head sommelier and chef de cuisine across Piedmont and Tuscany, Marco curates Dagsis Restaurants Dummy’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.'
+            'bio': 'Former head sommelier and chef de cuisine across Piedmont and Tuscany, Marco curates the Collective’s 4,000-bottle subterranean reserves and fire-roasted charcuterie.'
         },
     ]
 
@@ -754,7 +803,7 @@ def build_pdf():
             Paragraph("<b>Chef ID</b>", style_table_header),
             Paragraph("<b>Full Name & Title</b>", style_table_header),
             Paragraph("<b>Gastronomic Specialty</b>", style_table_header),
-            Paragraph("<b>Assigned Dagsis Estate</b>", style_table_header),
+            Paragraph("<b>Assigned Estate</b>", style_table_header),
         ]
     ]
 
@@ -804,7 +853,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy maintains a proprietary agricultural and marine supply chain comprising 200 distinct terroir ingredients. "
+        "The Culinary Collective maintains a proprietary agricultural and marine supply chain comprising 200 distinct terroir ingredients. "
         "Every single item is traceable to certified biodynamic farms, artisanal deep-sea divers, or high-altitude orchards.",
         style_body
     ))
@@ -827,7 +876,7 @@ def build_pdf():
     ]
 
     stories = [
-        'Cultivated specifically for Dagsis Restaurants Dummy under controlled micro-climate parameters to ensure maximum essential oil potency.',
+        'Cultivated specifically for our culinary estates under controlled micro-climate parameters to ensure maximum essential oil potency.',
         'Harvested at sunrise by artisanal diving families practicing sustainable cyclical rotation for over four generations.',
         'Flown in via climate-controlled courier within 18 hours of harvest directly from the source to our kitchen.',
         'Grown on volcanic nutrient-rich soil without synthetic fertilizers, irrigated purely with natural spring water.',
@@ -852,12 +901,12 @@ def build_pdf():
         ing_table_data.append([
             Paragraph(f"<b>{ing['id']}</b><br/>{ing['name']}", style_table_cell_bold),
             Paragraph(org, style_table_cell),
-            Paragraph(f"<font color='#A63A2B'><b>{grd}</b></font>", style_table_cell),
+            Paragraph(f"<b>{grd}</b>", style_table_cell),
             Paragraph(sea, style_table_cell_secondary),
             Paragraph(st, style_table_cell_secondary),
         ])
 
-    t_ing = Table(ing_table_data, colWidths=[70, 115, 95, 90, 153.27], repeatRows=1)
+    t_ing = Table(ing_table_data, colWidths=[80, 115, 95, 95, 138.27], repeatRows=1)
     t_ing.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), c_primary),
         ('BOX', (0, 0), (-1, -1), 0.6, c_border),
@@ -879,7 +928,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "For dignitaries, celebratory milestones, and private business conclaves, Dagsis Restaurants Dummy offers 30 private dining salons. "
+        "For dignitaries, celebratory milestones, and private business conclaves, the Culinary Collective offers 30 private dining salons. "
         "Each booking commands total acoustic discretion, customized menu calligraphy, dedicated sommelier cellar access, "
         "and a personal kitchen brigade.",
         style_body
@@ -946,7 +995,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy Catering mobilizes Michelin-standard kitchens to external venues, diplomatic embassies, "
+        "Our Catering Brigade mobilizes Michelin-standard kitchens to external venues, diplomatic embassies, "
         "superyachts berthed at Sentosa Cove, and luxury private residences across 4 Core Pillars:",
         style_body
     ))
@@ -1017,7 +1066,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy structures its calendar around 4 Grand Seasonal Movements that honor equatorial micro-seasons "
+        "The Culinary Collective structures its calendar around 4 Grand Seasonal Movements that honor equatorial micro-seasons "
         "and international harvest equinoxes:",
         style_body
     ))
@@ -1080,7 +1129,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy hosts an ongoing roster of 50 exclusive culinary and oenological events categorized into "
+        "The Culinary Collective hosts an ongoing roster of 50 exclusive culinary and oenological events categorized into "
         "Chef's Tables, Wine Pairing Nights, Seasonal Launches, and Private Soirées:",
         style_body
     ))
@@ -1098,29 +1147,29 @@ def build_pdf():
         [
             Paragraph("<b>Event ID / Name</b>", style_table_header),
             Paragraph("<b>Category & Format</b>", style_table_header),
-            Paragraph("<b>Host Estate</b>", style_table_header),
-            Paragraph("<b>Schedule Date</b>", style_table_header),
-            Paragraph("<b>Gastronomic Program Overview</b>", style_table_header),
+            Paragraph("<b>Schedule & Host Estate</b>", style_table_header),
+            Paragraph("<b>Ticket Price</b>", style_table_header),
+            Paragraph("<b>Gastronomic Highlights & Inclusions</b>", style_table_header),
         ]
     ]
 
     for idx, evt in enumerate(raw_data['events']):
         cat = evt_categories[idx % len(evt_categories)]
-        mth = evt_months[idx % len(evt_months)]
-        day = 10 + (idx * 3) % 18
-        rest_idx = idx % len(raw_data['restaurants'])
-        host_rest = raw_data['restaurants'][rest_idx]
+        month = evt_months[idx % len(evt_months)]
         desc = evt_descriptions[idx % len(evt_descriptions)]
+        rest_idx = (idx % len(raw_data['restaurants']))
+        assigned_rest = raw_data['restaurants'][rest_idx]
+        price = 195 + (idx % 6) * 45
 
         evt_table_data.append([
             Paragraph(f"<b>{evt['id']}</b><br/>{evt['name']}", style_table_cell_bold),
-            Paragraph(f"<b>{cat}</b>", style_table_cell_gold),
-            Paragraph(f"{host_rest['name']}<br/><font color='#5A4A42'>{host_rest['district']}</font>", style_table_cell),
-            Paragraph(f"<b>{day} {mth} 2026</b><br/>19:00 SGT", style_table_cell),
+            Paragraph(cat, style_table_cell),
+            Paragraph(f"{month} 2026<br/><font color='#5A4A42'>{assigned_rest['name']}</font>", style_table_cell_secondary),
+            Paragraph(f"<b>SGD ${price}</b>", style_table_cell_gold),
             Paragraph(desc, style_table_cell_secondary),
         ])
 
-    t_evt = Table(evt_table_data, colWidths=[85, 95, 115, 65, 163.27], repeatRows=1)
+    t_evt = Table(evt_table_data, colWidths=[90, 100, 105, 65, 163.27], repeatRows=1)
     t_evt.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), c_primary),
         ('BOX', (0, 0), (-1, -1), 0.6, c_border),
@@ -1136,13 +1185,13 @@ def build_pdf():
     story.append(PageBreak())
 
     # =========================================================================
-    # CHAPTER 11: CURATED PRIVILEGES & BRAND PARTNERSHIPS (40 PROMOTIONS)
+    # CHAPTER 11: PRIVILEGES & BRAND PARTNERSHIPS (40 PROMOTIONS)
     # =========================================================================
-    story.append(Paragraph("CHAPTER 11: PRIVILEGES & BRAND PARTNERSHIPS (40 PROMOTIONS)", style_chapter_h1))
+    story.append(Paragraph("CHAPTER 11: PRIVILEGES & PARTNERSHIPS (40 PROMOTIONS)", style_chapter_h1))
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy maintains 40 curated privileges and promotions in partnership with prestige credit cards "
+        "The Culinary Collective maintains 40 curated privileges and promotions in partnership with prestige credit cards "
         "(American Express Centurion, DBS Altitude, UOB Reserve, OCBC Voyage) and luxury concierge desks.",
         style_body
     ))
@@ -1160,7 +1209,7 @@ def build_pdf():
         'DBS Insignia & Altitude Visa Infinite',
         'UOB Reserve & Privilege Banking',
         'OCBC Voyage & Premier Banking',
-        'All Dagsis VIP Privilege Cardholders',
+        'All VIP Privilege Cardholders',
     ]
 
     pro_table_data = [
@@ -1175,7 +1224,7 @@ def build_pdf():
 
     for idx, pro in enumerate(raw_data['promotions']):
         priv = privileges[idx % len(privileges)]
-        code = f"DAGSIS-{pro['id']}"
+        code = f"VIP-{pro['id']}"
         part = card_partners[idx % len(card_partners)]
 
         pro_table_data.append([
@@ -1208,7 +1257,7 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy delivers haute cuisine to residences and private yachts across all 50 designated Singapore delivery zones. "
+        "The Culinary Collective delivers haute cuisine to residences and private yachts across all 50 designated Singapore delivery zones. "
         "Orders are dispatched in custom climate-controlled dual-zone thermal vaults (68°C heated chamber / -2°C chilled chamber) "
         "driven by white-glove chauffeurs to preserve Michelin-grade texture and temperature integrity.<br/>"
         "• <b>Minimum Order:</b> SGD $120 per delivery destination.<br/>"
@@ -1293,13 +1342,13 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy operates a real-time reservation ledger managing 150 daily seating allocations. "
+        "The Culinary Collective operates a real-time reservation ledger managing 150 daily seating allocations. "
         "The AI Chatbot assists guests in selecting dates, seating experiences, dietary disclosures, "
         "and generates instant VIP confirmation passes with unique booking verification codes.<br/>"
         "• <b>Advance Booking Window:</b> Up to 90 days in advance via the web portal or telephone concierge.<br/>"
         "• <b>Seating Experiences:</b> The Chef’s Counter Front Row, Main Dining Salon, Private Window Bay, Private Salon Vert.<br/>"
         "• <b>Standard Reservation Times:</b> Lunch: 12:00, 12:30, 13:00 | Dinner: 18:30, 19:00, 19:30, 20:00, 20:30.<br/>"
-        "• <b>Confirmation Format:</b> DAGSIS-RES[ID]-[4-Digit Random Salt] (e.g. DAGSIS-RES001-8492).",
+        "• <b>Confirmation Format:</b> RES[ID]-[4-Digit Random Salt] (e.g. RES001-8492).",
         style_body
     ))
 
@@ -1348,34 +1397,36 @@ def build_pdf():
 
     experiences = [
         'The Chef’s Counter Front Row',
-        'Panoramic Window Salon',
+        'Main Dining Salon Table',
+        'Private Harbor Window Bay',
         'Private Salon Vert',
-        'Terrace Verandah Al Fresco',
-        'Sommelier Tasting Table',
     ]
 
     for idx, res in enumerate(raw_data['reservations']):
-        status = res.get('status', 'Available')
-        svc = 'Dinner Seating (19:30)' if idx % 2 == 0 else 'Lunch Seating (12:30)'
+        status = res['status']
+        service = "Dinner 19:30" if idx % 2 == 0 else "Lunch 12:30"
         exp = experiences[idx % len(experiences)]
-        rest_sample = raw_data['restaurants'][idx % len(raw_data['restaurants'])]
+        rest_idx = idx % len(raw_data['restaurants'])
+        assigned_rest = raw_data['restaurants'][rest_idx]
+
+        color = '#A63A2B' if status == 'cancelled' else ('#8C6B28' if status == 'waitlist' else '#2E7D32')
 
         res_table_data.append([
             Paragraph(f"<b>{res['id']}</b>", style_table_cell_bold),
-            Paragraph(f"<font color='#A63A2B'><b>{status}</b></font>", style_table_cell),
-            Paragraph(svc, style_table_cell_secondary),
+            Paragraph(f"<font color='{color}'><b>{status.upper()}</b></font>", style_table_cell),
+            Paragraph(service, style_table_cell),
             Paragraph(exp, style_table_cell_secondary),
-            Paragraph(f"{rest_sample['name']} ({rest_sample['district']})", style_table_cell_secondary),
+            Paragraph(f"{assigned_rest['name']} ({assigned_rest['district']})", style_table_cell_secondary),
         ])
 
-    t_res = Table(res_table_data, colWidths=[65, 75, 105, 130, 148.27], repeatRows=1)
+    t_res = Table(res_table_data, colWidths=[65, 80, 95, 140, 143.27], repeatRows=1)
     t_res.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), c_primary),
         ('BOX', (0, 0), (-1, -1), 0.6, c_border),
         ('INNERGRID', (0, 0), (-1, -1), 0.4, c_border),
         ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, c_table_alt]),
-        ('TOPPADDING', (0, 0), (-1, -1), 2.5),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
         ('LEFTPADDING', (0, 0), (-1, -1), 4),
         ('RIGHTPADDING', (0, 0), (-1, -1), 4),
     ]))
@@ -1390,13 +1441,13 @@ def build_pdf():
     story.append(HRFlowable(width="100%", thickness=1, color=c_gold, spaceBefore=2, spaceAfter=8))
 
     story.append(Paragraph(
-        "Dagsis Restaurants Dummy has been universally evaluated across 300 verified 5-star reviews and international gastronomy journals. "
+        "The Culinary Collective has been universally evaluated across 300 verified 5-star reviews and international gastronomy journals. "
         "The AI Chatbot should reference these quotes when guests inquire about reviews, ratings, or reputation.",
         style_body
     ))
 
     critics_quotes = [
-        ("The Michelin Guide Singapore 2026", "Chief Inspector Evaluation", "A triumph of Southeast Asian botanical poetry and French technical restraint. Dagsis Restaurants Dummy has rewritten the boundaries of fine dining in Singapore."),
+        ("The Michelin Guide Singapore 2026", "Chief Inspector Evaluation", "A triumph of Southeast Asian botanical poetry and French technical restraint. The culinary brigade has rewritten the boundaries of fine dining in Singapore."),
         ("Tatler Dining Singapore", "Gastronomy Editor", "From the first sip of the torch ginger consommé to the final notes of the smoked cocoa soufflé, every single element was executed with flawless poise."),
         ("Financial Times - How To Spend It", "Nicholas Lander", "The most breathtaking dining view in Asia paired with an omakase counter that rivals the very finest temples of Ginza."),
         ("Epicure Asia", "Senior Food Critic", "An unforgettable masterclass in hospitality. The sommelier pairing journey alone deserves an international pilgrimage."),
@@ -1446,7 +1497,7 @@ def build_pdf():
         "1. <b>Strict Grounding:</b> Never invent restaurants, menu prices, chefs, or delivery zones not present in this knowledge base.<br/>"
         "2. <b>Concierge Language:</b> Use words like <i>'orchestrate', 'ateliers', 'degustation', 'curated', 'terroir', 'vintage'</i>. Avoid casual banter.<br/>"
         "3. <b>Reservation Links:</b> Direct guests to the interactive booking studio using <code>http://localhost:3000#reservations</code>.<br/>"
-        "4. <b>Human Escalation:</b> If a guest requests wedding consultations over 100 pax, private jet dining, or expresses acute dissatisfaction, provide the direct telephone: <b>+65 XXXXXXXXX</b>, address: <b>123, Street ABC, State XYZ, Pin-000000</b>, and email <b>concierge@dagsisrestaurants.com</b> immediately."
+        "4. <b>Human Escalation:</b> If a guest requests wedding consultations over 100 pax, private jet dining, or expresses acute dissatisfaction, provide the direct telephone: <b>+65 XXXXXXXXX</b>, address: <b>123, Street ABC, State XYZ, Pin-000000</b>, and email <b>concierge@diningcollective.com</b> immediately."
     )
     story.append(Paragraph(guidelines, style_body))
     story.append(Spacer(1, 10))
@@ -1454,36 +1505,36 @@ def build_pdf():
     story.append(Paragraph("15.2 The 30 Master FAQs for Instant Chatbot Retrieval", style_section_h2))
 
     faqs = [
-        ("Q1: What is Dagsis Restaurants Dummy?", "Dagsis Restaurants Dummy is a luxury restaurant collective operating 15 culinary estates across Singapore, blending French classical technique with Southeast Asian botanicals. It holds 3 Michelin Stars at its flagship ateliers."),
+        ("Q1: What is the Fine Dining & Culinary Collective?", "The Fine Dining & Culinary Collective is a luxury restaurant group operating 15 culinary estates across Singapore, blending French classical technique with Southeast Asian botanicals. It holds 3 Michelin Stars at its flagship ateliers."),
         ("Q2: Where is the flagship restaurant located?", "The flagship atelier (RST001) is located at 123, Street ABC, State XYZ, Pin-000000 (Marina Bay), offering 270° panoramic views of the Singapore Straits, monolithic brushed travertine architecture, and 3-Michelin-Star dining."),
-        ("Q3: How many restaurants does Dagsis Restaurants Dummy have in Singapore?", "Dagsis Restaurants Dummy operates exactly 15 estates spanning Marina Bay, Orchard, Sentosa, Bugis, Clarke Quay, Tanjong Pagar, Katong, Novena, Jurong East, Tampines, Woodlands, Punggol, Bishan, Serangoon, and Changi."),
+        ("Q3: How many restaurants does the Collective have in Singapore?", "The Collective operates exactly 15 estates spanning Marina Bay, Orchard, Sentosa, Bugis, Clarke Quay, Tanjong Pagar, Katong, Novena, Jurong East, Tampines, Woodlands, Punggol, Bishan, Serangoon, and Changi."),
         ("Q4: How do I book a table?", "Reservations can be made directly via our web studio at http://localhost:3000#reservations, or by calling our concierge line at +65 XXXXXXXXX daily from 10:00 to 22:00 SGT."),
-        ("Q5: What is the dress code across Dagsis Restaurants Dummy restaurants?", "The dress code is Smart Elegant across all 15 estates. Gentlemen are requested to wear collared shirts and covered shoes. Athletic singlets, board shorts, and flip-flops are strictly prohibited during dinner."),
-        ("Q6: Are Dagsis Restaurants Dummy's dishes Halal-certified?", "All poultry and beef are sourced from certified Halal suppliers. While Dagsis Restaurants Dummy serves vintage wines and pork at segregated kitchen stations, dedicated Halal-friendly degustation flights are prepared with pristine segregated cookware upon 24-hour advance request."),
-        ("Q7: Can Dagsis Restaurants Dummy accommodate vegan, vegetarian, or celiac diets?", "Yes. We offer dedicated 8-course Plant-Based and Celiac (Gluten-Free) degustation menus across all estates. Please inform us at least 24 hours prior to your seating."),
-        ("Q8: What is Dagsis Restaurants Dummy's cancellation policy?", "Cancellations made 48+ hours in advance receive a 100% full refund. Cancellations between 24 and 48 hours forfeit 50% of the deposit. Cancellations within 24 hours or no-shows forfeit 100% of the deposit."),
+        ("Q5: What is the dress code across the restaurants?", "The dress code is Smart Elegant across all 15 estates. Gentlemen are requested to wear collared shirts and covered shoes. Athletic singlets, board shorts, and flip-flops are strictly prohibited during dinner."),
+        ("Q6: Are the dishes Halal-certified?", "All poultry and beef are sourced from certified Halal suppliers. While our estates serve vintage wines and pork at segregated kitchen stations, dedicated Halal-friendly degustation flights are prepared with pristine segregated cookware upon 24-hour advance request."),
+        ("Q7: Can you accommodate vegan, vegetarian, or celiac diets?", "Yes. We offer dedicated 8-course Plant-Based and Celiac (Gluten-Free) degustation menus across all estates. Please inform us at least 24 hours prior to your seating."),
+        ("Q8: What is the cancellation policy?", "Cancellations made 48+ hours in advance receive a 100% full refund. Cancellations between 24 and 48 hours forfeit 50% of the deposit. Cancellations within 24 hours or no-shows forfeit 100% of the deposit."),
         ("Q9: What is the deposit requirement for reservations?", "A deposit of SGD $100 per guest is required for main dining reservations. For Private Dining Salons, a deposit of SGD $500 per booking is required. Deposits are deducted from your final bill."),
         ("Q10: May I bring my own wine (BYOB)? What is the corkage fee?", "Yes. Corkage is SGD $120 per 750ml bottle (maximum 2 bottles per table). Corkage is waived on a 1-for-1 basis for every bottle purchased from our Grand Cru reserve list. Outside spirits are prohibited."),
         ("Q11: May I bring an outside birthday cake?", "Yes. A cake service fee of SGD $60 per cake applies, which includes table-side gold-leaf plating, berry coulis presentation, and custom celebratory chocolate calligraphy."),
-        ("Q12: Are children allowed at Dagsis Restaurants Dummy?", "For dinner, children aged 7 and above are welcome in the main dining rooms. Children of all ages are warmly welcomed in our Private Dining Salons (PVT001–030) and during weekend luncheon services."),
-        ("Q13: Who is Dagsis Restaurants Dummy's Executive Culinary Director?", "Chef Antoine Dubois (CHF001), possessing 24 years of classical French and Straits botanical mastery, leads Dagsis Restaurants Dummy's flagship culinary direction."),
-        ("Q14: Who heads Straits Heritage and Peranakan gastronomy?", "Chef Mei Ling (CHF002), a Katong native with 18 years of experience, directs Dagsis Restaurants Dummy's contemporary Peranakan and botanical fermentation programs."),
-        ("Q15: What is Dagsis Restaurants Dummy's omakase restaurant?", "Restaurant 4 (RST004) in Bugis is a 14-seat sanctuary led by Master Kenjiro Tanaka (CHF003), featuring a 200-year-old Hinoki counter and Toyosu seafood."),
+        ("Q12: Are children allowed at the restaurants?", "For dinner, children aged 7 and above are welcome in the main dining rooms. Children of all ages are warmly welcomed in our Private Dining Salons (PVT001–030) and during weekend luncheon services."),
+        ("Q13: Who is the Executive Culinary Director?", "Chef Antoine Dubois (CHF001), possessing 24 years of classical French and Straits botanical mastery, leads the flagship culinary direction."),
+        ("Q14: Who heads Straits Heritage and Peranakan gastronomy?", "Chef Mei Ling (CHF002), a Katong native with 18 years of experience, directs the contemporary Peranakan and botanical fermentation programs."),
+        ("Q15: What is the omakase restaurant?", "Restaurant 4 (RST004) in Bugis is a 14-seat sanctuary led by Master Kenjiro Tanaka (CHF003), featuring a 200-year-old Hinoki counter and Toyosu seafood."),
         ("Q16: What is the price range of tasting menus?", "Seasonal degustation flights range from SGD $228++ to $388++ per guest. Bespoke Private Dining 8-course flights range from $280++ to $450++ per guest."),
-        ("Q17: Does Dagsis Restaurants Dummy offer islandwide food delivery?", "Yes. We deliver across all 50 Singapore postal zones (Zone 1 to Zone 50) using dual-zone thermal containers (68°C hot / -2°C chilled)."),
+        ("Q17: Does the Collective offer islandwide food delivery?", "Yes. We deliver across all 50 Singapore postal zones (Zone 1 to Zone 50) using dual-zone thermal containers (68°C hot / -2°C chilled)."),
         ("Q18: What is the minimum spend for delivery?", "The minimum order is SGD $120. Standard delivery fee is SGD $18, and delivery is completely free for orders of SGD $250 and above."),
         ("Q19: How fast is delivery dispatch?", "Deliveries arrive within 25 to 55 minutes depending on your postal zone, driven by white-glove chauffeurs."),
-        ("Q20: What are Dagsis Restaurants Dummy's Private Dining packages?", "We offer 30 private packages (PVT001–PVT030) accommodating 8 to 30 guests with minimum spends from SGD $2,800 to $13,000+, including dedicated sommeliers and acoustic privacy."),
-        ("Q21: Does Dagsis Restaurants Dummy cater for weddings and corporate galas?", "Yes. We offer 50 catering packages (CAT001–CAT050) spanning Corporate State Banquets, Grand Weddings, Superyacht Soirées, and Mobile Michelin Kitchens."),
+        ("Q20: What are the Private Dining packages?", "We offer 30 private packages (PVT001–PVT030) accommodating 8 to 30 guests with minimum spends from SGD $2,800 to $13,000+, including dedicated sommeliers and acoustic privacy."),
+        ("Q21: Do you cater for weddings and corporate galas?", "Yes. We offer 50 catering packages (CAT001–CAT050) spanning Corporate State Banquets, Grand Weddings, Superyacht Soirées, and Mobile Michelin Kitchens."),
         ("Q22: What credit card promotions are currently active?", "Through 40 partnerships (PRO001–PRO040), cardholders of Amex Centurion, DBS Altitude, UOB Reserve, and OCBC Voyage receive complimentary vintage champagne, cellar tours, and chauffeur transfers."),
-        ("Q23: How do I redeem a promotion code?", "Quote the promo code (e.g. DAGSIS-PRO001) during online booking or mention it to our telephone concierge when confirming your table."),
-        ("Q24: What are the 4 Seasonal Movements at Dagsis Restaurants Dummy?", "Monsoon Equinox Orchid Collection (Nov–Feb), Midsummer Straits Marine Harvest (Mar–Jun), Autumn Solstice Truffle & Bincho (Jul–Oct), and Winter Imperial Cacao (Equinox Gala)."),
+        ("Q23: How do I redeem a promotion code?", "Quote the promo code (e.g. VIP-PRO001) during online booking or mention it to our telephone concierge when confirming your table."),
+        ("Q24: What are the 4 Seasonal Movements?", "Monsoon Equinox Orchid Collection (Nov–Feb), Midsummer Straits Marine Harvest (Mar–Jun), Autumn Solstice Truffle & Bincho (Jul–Oct), and Winter Imperial Cacao (Equinox Gala)."),
         ("Q25: Can I book a Chef's Table masterclass?", "Yes. We host 50 events annually (EVT001–EVT050) including 8-seat Chef's Counter masterclasses, Grand Cru wine nights, and seasonal launches."),
-        ("Q26: What is Dagsis Restaurants Dummy's Michelin Star standing?", "Dagsis Restaurants Dummy holds Three Michelin Stars at Marina Bay (RST001) and Orchard (RST002), Two Michelin Stars at Sentosa (RST003), Bugis (RST004), and Serangoon (RST014), One Star at 5 estates, and a Michelin Green Star at Bishan (RST013)."),
+        ("Q26: What is the Michelin Star standing?", "Our collective holds Three Michelin Stars at Marina Bay (RST001) and Orchard (RST002), Two Michelin Stars at Sentosa (RST003), Bugis (RST004), and Serangoon (RST014), One Star at 5 estates, and a Michelin Green Star at Bishan (RST013)."),
         ("Q27: Where do you source your ingredients?", "We source 200 botanicals and terroir ingredients from Jurong Urban Hydroponics, Hokkaido, Cameron Highlands, Kagoshima, Brittany, Tasmania, and Piedmont."),
         ("Q28: Is parking available at the restaurants?", "Yes. Complimentary valet concierge is provided at Marina Bay (RST001), Orchard (RST002), Sentosa (RST003), Clarke Quay (RST005), and Serangoon (RST014)."),
         ("Q29: What happens if I am running late for my booking?", "Tables are held for a grace period of 20 minutes. Please call +65 XXXXXXXXX if you anticipate delays so our brigade can adjust your course timings."),
-        ("Q30: How can I reach a human concierge right now?", "Telephone: +65 XXXXXXXXX (10:00–22:00 SGT Daily) | Address: 123, Street ABC, State XYZ, Pin-000000 | Email: concierge@dagsisrestaurants.com | Web Portal: http://localhost:3000#reservations."),
+        ("Q30: How can I reach a human concierge right now?", "Telephone: +65 XXXXXXXXX (10:00–22:00 SGT Daily) | Address: 123, Street ABC, State XYZ, Pin-000000 | Email: concierge@diningcollective.com | Web Portal: http://localhost:3000#reservations."),
     ]
 
     for q, a in faqs:
@@ -1503,13 +1554,13 @@ def build_pdf():
         story.append(t_f)
         story.append(Spacer(1, 3.5))
 
-    # Concluding Verification Signoff
+    # Concluding Verification Signoff - Free of company names
     story.append(Spacer(1, 15))
     signoff_data = [
         [
             Paragraph("<b>DOCUMENT VALIDATION CERTIFICATE</b><br/>"
                       "This Knowledge Base has been compiled, indexed, and cryptographically verified against the official "
-                      "Dagsis Restaurants Dummy F&B Master Dataset. All 15 estates, 20 categories, 300 items, 100 signatures, 50 chefs, "
+                      "Master F&B Dataset. All 15 estates, 20 categories, 300 items, 100 signatures, 50 chefs, "
                       "200 ingredients, 30 private salons, 50 catering packages, 30 seasonal menus, 50 events, 40 promotions, "
                       "50 delivery zones, 150 reservations, and 300 reviews are 100% complete and authoritative.",
                       style_table_cell_secondary)
@@ -1527,26 +1578,23 @@ def build_pdf():
     story.append(t_sign)
 
     # Build Document with NumberedCanvas
-    print(f"Building master knowledge base PDF at: {output_pdf}")
-    doc.build(story, canvasmaker=SavoraNumberedCanvas)
+    print(f"Building master knowledge base PDF at: {primary_pdf}")
+    doc.build(story, canvasmaker=NumberedCanvas)
     print("PDF build complete!")
 
-    # Copy to public directory and create Dagsis named files
+    # Synchronize all output PDF targets
     try:
-        import shutil
-        os.makedirs(os.path.dirname(public_pdf), exist_ok=True)
-        shutil.copyfile(output_pdf, public_pdf)
-        
-        # Also maintain DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf
-        dagsis_pdf = os.path.join(output_dir, "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
-        dagsis_public = os.path.join(output_dir, "public", "DAGSIS_RESTAURANTS_DUMMY_AI_KNOWLEDGE_BASE.pdf")
-        shutil.copyfile(output_pdf, dagsis_pdf)
-        shutil.copyfile(output_pdf, dagsis_public)
-        print(f"Copied PDF to: {public_pdf}, {dagsis_pdf}, {dagsis_public}")
+        os.makedirs(os.path.dirname(public_primary_pdf), exist_ok=True)
+        shutil.copyfile(primary_pdf, public_primary_pdf)
+        shutil.copyfile(primary_pdf, dagsis_pdf)
+        shutil.copyfile(primary_pdf, dagsis_public)
+        shutil.copyfile(primary_pdf, savora_pdf)
+        shutil.copyfile(primary_pdf, savora_public)
+        print(f"Synchronized PDF to:\n - {public_primary_pdf}\n - {dagsis_pdf}\n - {dagsis_public}\n - {savora_pdf}\n - {savora_public}")
     except Exception as e:
         print(f"Could not copy files: {e}")
 
-    file_size_kb = os.path.getsize(output_pdf) / 1024
+    file_size_kb = os.path.getsize(primary_pdf) / 1024
     print(f"Final PDF Size: {file_size_kb:.2f} KB")
 
 
