@@ -100,3 +100,11 @@ body {
   font-family: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   letter-spacing: -0.02em;
 }
+
+/* Suppress any default unstyled chat widget elements */
+#dagsis-chat-button,
+#dagsis-chat-container {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
